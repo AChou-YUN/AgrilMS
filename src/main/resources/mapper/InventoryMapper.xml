@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.demo222.mapper.InventoryMapper">
+
+    <resultMap id="BaseResultMap" type="org.example.demo222.entity.Inventory">
+        <id column="id" property="id"/>
+        <result column="product_id" property="productId"/>
+        <result column="current_stock" property="currentStock"/>
+        <result column="frozen_stock" property="frozenStock"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="org.example.demo222.entity.Inventory" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO inventory (product_id, current_stock, frozen_stock)
+        VALUES (#{productId}, #{currentStock}, #{frozenStock})
+    </insert>
+
+    <update id="updateStock">
+        UPDATE inventory SET current_stock = current_stock + #{quantity}
+        WHERE product_id = #{productId}
+    </update>
+
+    <update id="decreaseStock">
+        UPDATE inventory SET current_stock = current_stock - #{quantity}
+        WHERE product_id = #{productId} AND current_stock >= #{quantity}
+    </update>
+
+    <update id="adjustStock">
+        UPDATE inventory SET current_stock = #{actualStock}
+        WHERE product_id = #{productId}
+    </update>
+
+    <select id="selectByProductId" resultMap="BaseResultMap">
+        SELECT * FROM inventory WHERE product_id = #{productId}
+    </select>
+
+    <delete id="deleteByProductId">
+        DELETE FROM inventory WHERE product_id = #{productId}
+    </delete>
+
+</mapper>

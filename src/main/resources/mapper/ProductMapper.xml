@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.demo222.mapper.ProductMapper">
+
+    <resultMap id="BaseResultMap" type="org.example.demo222.entity.Product">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="specification" property="specification"/>
+        <result column="unit_id" property="unitId"/>
+        <result column="safety_stock" property="safetyStock"/>
+        <result column="manufacturer" property="manufacturer"/>
+        <result column="batch_number" property="batchNumber"/>
+        <result column="production_date" property="productionDate"/>
+        <result column="expiry_date" property="expiryDate"/>
+        <result column="purchase_price" property="purchasePrice"/>
+        <result column="selling_price" property="sellingPrice"/>
+        <result column="description" property="description"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="category_name" property="categoryName"/>
+        <result column="unit_name" property="unitName"/>
+        <result column="current_stock" property="currentStock"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="org.example.demo222.entity.Product" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO product (name, category_id, specification, unit_id, safety_stock,
+            manufacturer, batch_number, production_date, expiry_date,
+            purchase_price, selling_price, description, status)
+        VALUES (#{name}, #{categoryId}, #{specification}, #{unitId}, #{safetyStock},
+            #{manufacturer}, #{batchNumber}, #{productionDate}, #{expiryDate},
+            #{purchasePrice}, #{sellingPrice}, #{description}, #{status})
+    </insert>
+
+    <update id="update" parameterType="org.example.demo222.entity.Product">
+        UPDATE product
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="specification != null">specification = #{specification},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="safetyStock != null">safety_stock = #{safetyStock},</if>
+            <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+            <if test="batchNumber != null">batch_number = #{batchNumber},</if>
+            <if test="productionDate != null">production_date = #{productionDate},</if>
+            <if test="expiryDate != null">expiry_date = #{expiryDate},</if>
+            <if test="purchasePrice != null">purchase_price = #{purchasePrice},</if>
+            <if test="sellingPrice != null">selling_price = #{sellingPrice},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM product WHERE id = #{id}
+    </delete>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT p.*, c.name AS category_name, u.name AS unit_name,
+               IFNULL(i.current_stock, 0) AS current_stock
+        FROM product p
+        LEFT JOIN product_category c ON p.category_id = c.id
+        LEFT JOIN unit u ON p.unit_id = u.id
+        LEFT JOIN inventory i ON p.id = i.product_id
+        WHERE p.id = #{id}
+    </select>
+
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT p.*, c.name AS category_name, u.name AS unit_name,
+               IFNULL(i.current_stock, 0) AS current_stock
+        FROM product p
+        LEFT JOIN product_category c ON p.category_id = c.id
+        LEFT JOIN unit u ON p.unit_id = u.id
+        LEFT JOIN inventory i ON p.id = i.product_id
+        <where>
+            <if test="name != null and name != ''">
+                AND p.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="categoryId != null">
+                AND p.category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                AND p.status = #{status}
+            </if>
+            <if test="manufacturer != null and manufacturer != ''">
+                AND p.manufacturer LIKE CONCAT('%', #{manufacturer}, '%')
+            </if>
+            <if test="lowStock != null and lowStock == 1">
+                AND p.safety_stock > 0 AND IFNULL(i.current_stock, 0) &lt; p.safety_stock
+            </if>
+        </where>
+        ORDER BY p.create_time DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="selectCount" resultType="long">
+        SELECT COUNT(DISTINCT p.id)
+        FROM product p
+        LEFT JOIN inventory i ON p.id = i.product_id
+        <where>
+            <if test="name != null and name != ''">
+                AND p.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="categoryId != null">
+                AND p.category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                AND p.status = #{status}
+            </if>
+            <if test="manufacturer != null and manufacturer != ''">
+                AND p.manufacturer LIKE CONCAT('%', #{manufacturer}, '%')
+            </if>
+            <if test="lowStock != null and lowStock == 1">
+                AND p.safety_stock > 0 AND IFNULL(i.current_stock, 0) &lt; p.safety_stock
+            </if>
+        </where>
+    </select>
+
+    <update id="updateStatus">
+        UPDATE product SET status = #{status} WHERE id = #{id}
+    </update>
+
+    <update id="updateSafetyStock">
+        UPDATE product SET safety_stock = #{safetyStock} WHERE id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.demo222.mapper.InventoryLogMapper">
+
+    <resultMap id="BaseResultMap" type="org.example.demo222.entity.InventoryLog">
+        <id column="id" property="id"/>
+        <result column="product_id" property="productId"/>
+        <result column="change_type" property="changeType"/>
+        <result column="change_quantity" property="changeQuantity"/>
+        <result column="before_stock" property="beforeStock"/>
+        <result column="after_stock" property="afterStock"/>
+        <result column="related_order_no" property="relatedOrderNo"/>
+        <result column="operator_id" property="operatorId"/>
+        <result column="remark" property="remark"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="org.example.demo222.entity.InventoryLog" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO inventory_log (product_id, change_type, change_quantity, before_stock, after_stock, related_order_no, operator_id, remark)
+        VALUES (#{productId}, #{changeType}, #{changeQuantity}, #{beforeStock}, #{afterStock}, #{relatedOrderNo}, #{operatorId}, #{remark})
+    </insert>
+
+    <select id="selectByProductId" resultMap="BaseResultMap">
+        SELECT il.*, p.name AS product_name, u.real_name AS operator_name
+        FROM inventory_log il
+        LEFT JOIN product p ON il.product_id = p.id
+        LEFT JOIN sys_user u ON il.operator_id = u.id
+        WHERE il.product_id = #{productId}
+        ORDER BY il.create_time DESC
+    </select>
+
+</mapper>

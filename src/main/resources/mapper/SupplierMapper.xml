@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.demo222.mapper.SupplierMapper">
+
+    <resultMap id="BaseResultMap" type="org.example.demo222.entity.Supplier">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="contact_person" property="contactPerson"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="credit_level" property="creditLevel"/>
+        <result column="bank_account" property="bankAccount"/>
+        <result column="remark" property="remark"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="org.example.demo222.entity.Supplier" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO supplier (name, contact_person, phone, address, credit_level, bank_account, remark, status)
+        VALUES (#{name}, #{contactPerson}, #{phone}, #{address}, #{creditLevel}, #{bankAccount}, #{remark}, 1)
+    </insert>
+
+    <update id="update" parameterType="org.example.demo222.entity.Supplier">
+        UPDATE supplier
+        SET name = #{name}, contact_person = #{contactPerson}, phone = #{phone},
+            address = #{address}, credit_level = #{creditLevel},
+            bank_account = #{bankAccount}, remark = #{remark}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM supplier WHERE id = #{id}
+    </delete>
+
+    <update id="updateStatus">
+        UPDATE supplier SET status = #{status} WHERE id = #{id}
+    </update>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM supplier WHERE id = #{id}
+    </select>
+
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT * FROM supplier
+        <where>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="creditLevel != null">
+                AND credit_level = #{creditLevel}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="selectCount" resultType="long">
+        SELECT COUNT(*) FROM supplier
+        <where>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="creditLevel != null">
+                AND credit_level = #{creditLevel}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAllActive" resultMap="BaseResultMap">
+        SELECT * FROM supplier WHERE status = 1 ORDER BY name
+    </select>
+
+</mapper>
