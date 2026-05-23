@@ -203,6 +203,7 @@ CREATE TABLE IF NOT EXISTS sales_order_item (
     order_id BIGINT NOT NULL COMMENT '销售单ID',
     product_id BIGINT NOT NULL COMMENT '农资产品ID',
     quantity INT NOT NULL COMMENT '销售数量',
+    return_quantity INT DEFAULT 0 COMMENT '已退货数量',
     unit_price DECIMAL(10,2) NOT NULL COMMENT '售价',
     subtotal DECIMAL(12,2) NOT NULL COMMENT '小计金额',
     INDEX idx_order (order_id),

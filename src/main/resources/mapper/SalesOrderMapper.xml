@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.demo222.mapper.SalesOrderMapper">
+
+    <resultMap id="BaseResultMap" type="org.example.demo222.entity.SalesOrder">
+        <id column="id" property="id"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="user_id" property="userId"/>
+        <result column="total_amount" property="totalAmount"/>
+        <result column="payment_method" property="paymentMethod"/>
+        <result column="status" property="status"/>
+        <result column="order_date" property="orderDate"/>
+        <result column="remark" property="remark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="customer_phone" property="customerPhone"/>
+        <result column="operator_name" property="operatorName"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="org.example.demo222.entity.SalesOrder" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sales_order (order_no, customer_id, user_id, total_amount, payment_method, status, order_date, remark)
+        VALUES (#{orderNo}, #{customerId}, #{userId}, #{totalAmount}, #{paymentMethod}, #{status}, #{orderDate}, #{remark})
+    </insert>
+
+    <update id="updateStatus">
+        UPDATE sales_order SET status = #{status} WHERE id = #{id}
+    </update>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT so.*, c.name AS customer_name, c.phone AS customer_phone, u.real_name AS operator_name
+        FROM sales_order so
+        LEFT JOIN customer c ON so.customer_id = c.id
+        LEFT JOIN sys_user u ON so.user_id = u.id
+        WHERE so.id = #{id}
+    </select>
+
+    <select id="selectByOrderNo" resultMap="BaseResultMap">
+        SELECT so.*, c.name AS customer_name, c.phone AS customer_phone, u.real_name AS operator_name
+        FROM sales_order so
+        LEFT JOIN customer c ON so.customer_id = c.id
+        LEFT JOIN sys_user u ON so.user_id = u.id
+        WHERE so.order_no = #{orderNo}
+    </select>
+
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT so.*, c.name AS customer_name, c.phone AS customer_phone, u.real_name AS operator_name
+        FROM sales_order so
+        LEFT JOIN customer c ON so.customer_id = c.id
+        LEFT JOIN sys_user u ON so.user_id = u.id
+        <where>
+            <if test="orderNo != null and orderNo != ''">
+                AND so.order_no LIKE CONCAT('%', #{orderNo}, '%')
+            </if>
+            <if test="customerId != null">
+                AND so.customer_id = #{customerId}
+            </if>
+            <if test="status != null">
+                AND so.status = #{status}
+            </if>
+            <if test="paymentMethod != null">
+                AND so.payment_method = #{paymentMethod}
+            </if>
+            <if test="startDate != null">
+                AND so.order_date &gt;= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND so.order_date &lt;= #{endDate}
+            </if>
+        </where>
+        ORDER BY so.create_time DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="selectCount" resultType="long">
+        SELECT COUNT(*)
+        FROM sales_order so
+        <where>
+            <if test="orderNo != null and orderNo != ''">
+                AND so.order_no LIKE CONCAT('%', #{orderNo}, '%')
+            </if>
+            <if test="customerId != null">
+                AND so.customer_id = #{customerId}
+            </if>
+            <if test="status != null">
+                AND so.status = #{status}
+            </if>
+            <if test="paymentMethod != null">
+                AND so.payment_method = #{paymentMethod}
+            </if>
+            <if test="startDate != null">
+                AND so.order_date &gt;= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND so.order_date &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="getMaxSequence" resultType="java.lang.Integer">
+        SELECT MAX(CAST(SUBSTRING(order_no, 11) AS UNSIGNED))
+        FROM sales_order
+        WHERE order_no LIKE CONCAT('SO', #{datePrefix}, '%')
+    </select>
+
+    <select id="selectByCustomerId" resultMap="BaseResultMap">
+        SELECT so.*, c.name AS customer_name, c.phone AS customer_phone, u.real_name AS operator_name
+        FROM sales_order so
+        LEFT JOIN customer c ON so.customer_id = c.id
+        LEFT JOIN sys_user u ON so.user_id = u.id
+        WHERE so.customer_id = #{customerId}
+        ORDER BY so.create_time DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="countByCustomerId" resultType="long">
+        SELECT COUNT(*) FROM sales_order WHERE customer_id = #{customerId}
+    </select>
+
+    <!-- 按日统计 -->
+    <select id="selectDailyStats" resultType="org.example.demo222.dto.response.SalesStatItem">
+        SELECT DATE_FORMAT(order_date, '%Y-%m-%d') AS date,
+               SUM(total_amount) AS amount,
+               COUNT(*) AS count
+        FROM sales_order
+        WHERE status != 2
+          AND YEAR(order_date) = #{year}
+          AND MONTH(order_date) = #{month}
+        GROUP BY order_date
+        ORDER BY order_date
+    </select>
+
+    <!-- 按月统计 -->
+    <select id="selectMonthlyStats" resultType="org.example.demo222.dto.response.SalesStatItem">
+        SELECT DATE_FORMAT(order_date, '%Y-%m') AS date,
+               SUM(total_amount) AS amount,
+               COUNT(*) AS count
+        FROM sales_order
+        WHERE status != 2
+          AND YEAR(order_date) = #{year}
+        GROUP BY YEAR(order_date), MONTH(order_date)
+        ORDER BY date
+    </select>
+
+    <!-- 按年统计 -->
+    <select id="selectYearlyStats" resultType="org.example.demo222.dto.response.SalesStatItem">
+        SELECT DATE_FORMAT(order_date, '%Y') AS date,
+               SUM(total_amount) AS amount,
+               COUNT(*) AS count
+        FROM sales_order
+        WHERE status != 2
+        GROUP BY YEAR(order_date)
+        ORDER BY date
+    </select>
+
+    <!-- 产品销售排行 -->
+    <select id="selectProductRanking" resultType="org.example.demo222.dto.response.SalesRankingVO">
+        SELECT p.id AS product_id, p.name AS product_name,
+               pc.name AS category_name,
+               SUM(soi.quantity) AS total_quantity,
+               SUM(soi.subtotal) AS total_amount
+        FROM sales_order_item soi
+        JOIN sales_order so ON soi.order_id = so.id
+        JOIN product p ON soi.product_id = p.id
+        LEFT JOIN product_category pc ON p.category_id = pc.id
+        WHERE so.status != 2
+          AND so.order_date BETWEEN #{startDate} AND #{endDate}
+        GROUP BY p.id, p.name, pc.name
+        ORDER BY total_amount DESC
+        LIMIT #{limit}
+    </select>
+
+    <!-- 统计指定日期的销售概况 -->
+    <select id="selectSummaryByDate" resultType="org.example.demo222.dto.response.SalesStatItem">
+        SELECT SUM(total_amount) AS amount, COUNT(*) AS count
+        FROM sales_order
+        WHERE status != 2 AND order_date = #{date}
+    </select>
+
+    <!-- 统计指定月份的销售概况 -->
+    <select id="selectSummaryByMonth" resultType="org.example.demo222.dto.response.SalesStatItem">
+        SELECT SUM(total_amount) AS amount, COUNT(*) AS count
+        FROM sales_order
+        WHERE status != 2
+          AND YEAR(order_date) = #{year}
+          AND MONTH(order_date) = #{month}
+    </select>
+
+    <!-- 统计指定年份的销售概况 -->
+    <select id="selectSummaryByYear" resultType="org.example.demo222.dto.response.SalesStatItem">
+        SELECT SUM(total_amount) AS amount, COUNT(*) AS count
+        FROM sales_order
+        WHERE status != 2
+          AND YEAR(order_date) = #{year}
+    </select>
+
+</mapper>
