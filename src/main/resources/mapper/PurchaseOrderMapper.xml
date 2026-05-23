@@ -117,8 +117,8 @@
         FROM purchase_order
         WHERE status = 1
           AND order_date &gt;= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
-        GROUP BY order_date
-        ORDER BY order_date
+        GROUP BY DATE_FORMAT(order_date, '%m-%d')
+        ORDER BY date
     </select>
 
     <!-- 按日统计进货 -->
@@ -130,8 +130,8 @@
         WHERE status != 2
           AND YEAR(order_date) = #{year}
           AND MONTH(order_date) = #{month}
-        GROUP BY order_date
-        ORDER BY order_date
+        GROUP BY DATE_FORMAT(order_date, '%Y-%m-%d')
+        ORDER BY date
     </select>
 
     <!-- 按月统计进货 -->
@@ -142,7 +142,7 @@
         FROM purchase_order
         WHERE status != 2
           AND YEAR(order_date) = #{year}
-        GROUP BY YEAR(order_date), MONTH(order_date)
+        GROUP BY DATE_FORMAT(order_date, '%Y-%m')
         ORDER BY date
     </select>
 
@@ -153,7 +153,7 @@
                COUNT(*) AS count
         FROM purchase_order
         WHERE status != 2
-        GROUP BY YEAR(order_date)
+        GROUP BY DATE_FORMAT(order_date, '%Y')
         ORDER BY date
     </select>
 
