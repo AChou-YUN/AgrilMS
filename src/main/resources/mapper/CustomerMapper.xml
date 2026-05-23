@@ -67,4 +67,11 @@
         SELECT COUNT(*) FROM sales_order WHERE customer_id = #{customerId}
     </select>
 
+    <!-- 本月新增客户数 -->
+    <select id="countMonthNew" resultType="int">
+        SELECT COUNT(*) FROM customer
+        WHERE YEAR(create_time) = YEAR(CURDATE())
+          AND MONTH(create_time) = MONTH(CURDATE())
+    </select>
+
 </mapper>

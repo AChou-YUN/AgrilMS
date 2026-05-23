@@ -39,4 +39,116 @@
         DELETE FROM inventory WHERE product_id = #{productId}
     </delete>
 
+    <!-- 库存列表查询（含预警判断） -->
+    <select id="selectInventoryList" resultType="org.example.demo222.dto.response.InventoryVO">
+        SELECT p.id AS product_id,
+               p.name AS product_name,
+               p.category_id,
+               c.name AS category_name,
+               p.specification,
+               u.name AS unit_name,
+               IFNULL(i.current_stock, 0) AS current_stock,
+               p.safety_stock,
+               IFNULL(i.frozen_stock, 0) AS frozen_stock,
+               CASE WHEN p.safety_stock > 0 AND IFNULL(i.current_stock, 0) &lt; p.safety_stock
+                    THEN true ELSE false END AS is_warning,
+               (IFNULL(i.current_stock, 0) - p.safety_stock) AS difference,
+               (IFNULL(i.current_stock, 0) * p.purchase_price) AS stock_value
+        FROM product p
+        LEFT JOIN product_category c ON p.category_id = c.id
+        LEFT JOIN unit u ON p.unit_id = u.id
+        LEFT JOIN inventory i ON p.id = i.product_id
+        WHERE p.status = 1
+        <if test="productName != null and productName != ''">
+            AND p.name LIKE CONCAT('%', #{productName}, '%')
+        </if>
+        <if test="categoryId != null">
+            AND p.category_id = #{categoryId}
+        </if>
+        <if test="warningOnly != null and warningOnly == 1">
+            AND p.safety_stock &gt; 0 AND IFNULL(i.current_stock, 0) &lt; p.safety_stock
+        </if>
+        ORDER BY is_warning DESC, p.category_id, p.id
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <!-- 库存列表计数 -->
+    <select id="selectInventoryCount" resultType="long">
+        SELECT COUNT(*)
+        FROM product p
+        LEFT JOIN inventory i ON p.id = i.product_id
+        WHERE p.status = 1
+        <if test="productName != null and productName != ''">
+            AND p.name LIKE CONCAT('%', #{productName}, '%')
+        </if>
+        <if test="categoryId != null">
+            AND p.category_id = #{categoryId}
+        </if>
+        <if test="warningOnly != null and warningOnly == 1">
+            AND p.safety_stock &gt; 0 AND IFNULL(i.current_stock, 0) &lt; p.safety_stock
+        </if>
+    </select>
+
+    <!-- 库存预警列表 -->
+    <select id="selectWarningList" resultType="org.example.demo222.dto.response.InventoryVO">
+        SELECT p.id AS product_id,
+               p.name AS product_name,
+               p.category_id,
+               c.name AS category_name,
+               p.specification,
+               u.name AS unit_name,
+               IFNULL(i.current_stock, 0) AS current_stock,
+               p.safety_stock,
+               IFNULL(i.frozen_stock, 0) AS frozen_stock,
+               true AS is_warning,
+               (IFNULL(i.current_stock, 0) - p.safety_stock) AS difference,
+               (IFNULL(i.current_stock, 0) * p.purchase_price) AS stock_value
+        FROM product p
+        LEFT JOIN product_category c ON p.category_id = c.id
+        LEFT JOIN unit u ON p.unit_id = u.id
+        LEFT JOIN inventory i ON p.id = i.product_id
+        WHERE p.status = 1
+          AND p.safety_stock &gt; 0
+          AND IFNULL(i.current_stock, 0) &lt; p.safety_stock
+        <if test="categoryId != null">
+            AND p.category_id = #{categoryId}
+        </if>
+        ORDER BY difference ASC
+    </select>
+
+    <!-- 库存预警数量 -->
+    <select id="selectWarningCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM product p
+        LEFT JOIN inventory i ON p.id = i.product_id
+        WHERE p.status = 1
+          AND p.safety_stock &gt; 0
+          AND IFNULL(i.current_stock, 0) &lt; p.safety_stock
+    </select>
+
+    <!-- 库存报表数据 -->
+    <select id="selectInventoryReport" resultType="org.example.demo222.dto.response.InventoryReportVO">
+        SELECT p.id AS product_id,
+               p.name AS product_name,
+               c.name AS category_name,
+               u.name AS unit_name,
+               IFNULL(i.current_stock, 0) AS current_stock,
+               p.purchase_price,
+               (IFNULL(i.current_stock, 0) * p.purchase_price) AS stock_value,
+               p.safety_stock,
+               CASE WHEN p.safety_stock &gt; 0 AND IFNULL(i.current_stock, 0) &lt; p.safety_stock
+                    THEN true ELSE false END AS is_warning
+        FROM product p
+        LEFT JOIN product_category c ON p.category_id = c.id
+        LEFT JOIN unit u ON p.unit_id = u.id
+        LEFT JOIN inventory i ON p.id = i.product_id
+        WHERE p.status = 1
+        ORDER BY p.category_id, p.id
+    </select>
+
+    <!-- 上架产品总数 -->
+    <select id="selectActiveProductCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM product WHERE status = 1
+    </select>
+
 </mapper>

@@ -23,4 +23,9 @@ public interface CustomerMapper {
                      @Param("phone") String phone);
     List<Customer> selectAll();
     int countByCustomerId(@Param("customerId") Long customerId);
+
+    /**
+     * 本月新增客户数
+     */
+    int countMonthNew();
 }

@@ -29,4 +29,92 @@
         ORDER BY il.create_time DESC
     </select>
 
+    <!-- 分页查询库存日志 -->
+    <select id="selectByPage" resultType="org.example.demo222.dto.response.InventoryLogVO">
+        SELECT il.id, il.product_id, p.name AS product_name,
+               il.change_type AS changeType,
+               CASE il.change_type
+                   WHEN 'PURCHASE' THEN '进货入库'
+                   WHEN 'SALE' THEN '销售出库'
+                   WHEN 'ADJUST' THEN '库存盘点'
+                   WHEN 'DAMAGE' THEN '报损'
+                   WHEN 'RETURN' THEN '退货入库'
+                   ELSE il.change_type
+               END AS change_type_text,
+               il.change_quantity AS changeQuantity,
+               il.before_stock AS beforeStock,
+               il.after_stock AS afterStock,
+               il.related_order_no AS relatedOrderNo,
+               il.operator_id AS operatorId,
+               u.real_name AS operator_name,
+               il.remark,
+               il.create_time AS createTime
+        FROM inventory_log il
+        LEFT JOIN product p ON il.product_id = p.id
+        LEFT JOIN sys_user u ON il.operator_id = u.id
+        <where>
+            <if test="productId != null">
+                AND il.product_id = #{productId}
+            </if>
+            <if test="changeType != null and changeType != ''">
+                AND il.change_type = #{changeType}
+            </if>
+            <if test="startDate != null">
+                AND il.create_time &gt;= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND il.create_time &lt; DATE_ADD(#{endDate}, INTERVAL 1 DAY)
+            </if>
+        </where>
+        ORDER BY il.create_time DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <!-- 库存日志计数 -->
+    <select id="selectCount" resultType="long">
+        SELECT COUNT(*)
+        FROM inventory_log il
+        <where>
+            <if test="productId != null">
+                AND il.product_id = #{productId}
+            </if>
+            <if test="changeType != null and changeType != ''">
+                AND il.change_type = #{changeType}
+            </if>
+            <if test="startDate != null">
+                AND il.create_time &gt;= #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND il.create_time &lt; DATE_ADD(#{endDate}, INTERVAL 1 DAY)
+            </if>
+        </where>
+    </select>
+
+    <!-- 近30天销售趋势 -->
+    <select id="selectSalesTrend" resultType="org.example.demo222.dto.response.SalesStatItem">
+        SELECT DATE_FORMAT(order_date, '%m-%d') AS date,
+               IFNULL(SUM(total_amount), 0) AS amount,
+               COUNT(*) AS count
+        FROM sales_order
+        WHERE status != 2
+          AND order_date &gt;= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+        GROUP BY order_date
+        ORDER BY order_date
+    </select>
+
+    <!-- 分类销售占比 -->
+    <select id="selectCategorySales" resultType="org.example.demo222.dto.response.CategorySalesVO">
+        SELECT pc.name AS category_name,
+               SUM(soi.subtotal) AS amount,
+               SUM(soi.quantity) AS quantity
+        FROM sales_order_item soi
+        JOIN sales_order so ON soi.order_id = so.id
+        JOIN product p ON soi.product_id = p.id
+        JOIN product_category pc ON p.category_id = pc.id
+        WHERE so.status != 2
+          AND so.order_date &gt;= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+        GROUP BY pc.id, pc.name
+        ORDER BY amount DESC
+    </select>
+
 </mapper>

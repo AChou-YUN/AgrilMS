@@ -34,4 +34,29 @@ public interface PurchaseOrderMapper {
      * 获取指定日期之后的最大序号，用于生成进货单号
      */
     Integer getMaxSequence(@Param("datePrefix") String datePrefix);
+
+    /**
+     * 本月进货统计（总额和笔数）
+     */
+    org.example.demo222.dto.response.SalesStatItem selectMonthPurchase();
+
+    /**
+     * 近30天进货趋势
+     */
+    java.util.List<org.example.demo222.dto.response.SalesStatItem> selectPurchaseTrend();
+
+    /**
+     * 按日统计进货
+     */
+    java.util.List<org.example.demo222.dto.response.SalesStatItem> selectDailyStats(@Param("year") int year, @Param("month") int month);
+
+    /**
+     * 按月统计进货
+     */
+    java.util.List<org.example.demo222.dto.response.SalesStatItem> selectMonthlyStats(@Param("year") int year);
+
+    /**
+     * 按年统计进货
+     */
+    java.util.List<org.example.demo222.dto.response.SalesStatItem> selectYearlyStats();
 }
