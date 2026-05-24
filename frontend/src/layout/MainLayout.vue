@@ -4,7 +4,7 @@
     <el-aside :width="isCollapse ? '64px' : '220px'" class="layout-aside">
       <div class="aside-header">
         <div class="logo-icon">
-          <el-icon :size="24" color="#fff"><Management /></el-icon>
+          <el-icon :size="22" color="#E8DCC7"><Management /></el-icon>
         </div>
         <transition name="fade">
           <span v-show="!isCollapse" class="logo-text">农资管理系统</span>
@@ -17,9 +17,6 @@
           :collapse="isCollapse"
           :unique-opened="true"
           router
-          background-color="#001529"
-          text-color="rgba(255,255,255,0.65)"
-          active-text-color="#fff"
           class="aside-menu"
         >
           <el-menu-item index="/dashboard">
@@ -197,7 +194,7 @@ function handleCommand(command) {
 }
 
 .layout-aside {
-  background-color: #001529;
+  background-color: var(--color-moss-dark);
   transition: width 0.3s ease;
   overflow: hidden;
 }
@@ -208,8 +205,9 @@ function handleCommand(command) {
   align-items: center;
   justify-content: center;
   padding: 0 16px;
-  background-color: #002140;
+  background-color: var(--color-moss);
   overflow: hidden;
+  border-bottom: 1px solid rgba(232, 220, 199, 0.1);
 }
 
 .logo-icon {
@@ -219,15 +217,18 @@ function handleCommand(command) {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(232, 220, 199, 0.15);
+  border-radius: 8px;
 }
 
 .logo-text {
-  color: #fff;
+  color: var(--text-on-dark);
   font-size: 16px;
   font-weight: 600;
   white-space: nowrap;
   margin-left: 10px;
   letter-spacing: 1px;
+  font-family: var(--font-display);
 }
 
 .aside-scroll {
@@ -242,21 +243,65 @@ function handleCommand(command) {
   width: 220px;
 }
 
+/* 侧边栏菜单样式覆盖 */
+.aside-menu {
+  --el-menu-bg-color: transparent;
+  --el-menu-text-color: rgba(232, 220, 199, 0.7);
+  --el-menu-active-color: #E8DCC7;
+  --el-menu-hover-bg-color: rgba(232, 220, 199, 0.1);
+}
+
+.aside-menu .el-menu-item {
+  color: rgba(232, 220, 199, 0.7);
+  font-size: 14px;
+  height: 48px;
+  line-height: 48px;
+  margin: 2px 8px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.aside-menu .el-menu-item:hover {
+  background: rgba(232, 220, 199, 0.12) !important;
+  color: #E8DCC7;
+}
+
+.aside-menu .el-menu-item.is-active {
+  background: rgba(139, 157, 131, 0.3) !important;
+  color: #E8DCC7;
+  font-weight: 500;
+}
+
+.aside-menu .el-sub-menu__title {
+  color: rgba(232, 220, 199, 0.7);
+  font-size: 14px;
+  height: 48px;
+  line-height: 48px;
+  margin: 2px 8px;
+  border-radius: 8px;
+}
+
+.aside-menu .el-sub-menu__title:hover {
+  background: rgba(232, 220, 199, 0.12) !important;
+  color: #E8DCC7;
+}
+
 .layout-main {
   flex: 1;
   overflow: hidden;
-  background-color: #f0f2f5;
+  background-color: var(--surface-sand);
 }
 
 .layout-header {
   height: 60px;
-  background: #fff;
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  padding: 0 24px;
+  box-shadow: 0 2px 8px rgba(96, 108, 56, 0.06);
   z-index: 10;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .header-left {
@@ -267,12 +312,12 @@ function handleCommand(command) {
 
 .collapse-btn {
   cursor: pointer;
-  color: #606266;
+  color: var(--text-secondary);
   transition: color 0.3s;
 }
 
 .collapse-btn:hover {
-  color: #409eff;
+  color: var(--color-sage);
 }
 
 .breadcrumb {
@@ -289,15 +334,19 @@ function handleCommand(command) {
   align-items: center;
   cursor: pointer;
   gap: 8px;
-  color: #606266;
+  color: var(--text-secondary);
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: all 0.3s;
 }
 
 .user-dropdown:hover {
-  color: #409eff;
+  color: var(--color-sage);
+  background: var(--fill-color-lighter);
 }
 
 .user-avatar {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-moss) 100%);
   color: #fff;
   font-size: 14px;
   font-weight: 600;
@@ -309,12 +358,14 @@ function handleCommand(command) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-family: var(--font-body);
 }
 
 .layout-content {
   padding: 20px;
   overflow-y: auto;
   height: calc(100vh - 60px);
+  background-color: var(--surface-sand);
 }
 
 /* 过渡动画 */

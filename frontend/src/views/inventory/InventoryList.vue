@@ -83,5 +83,5 @@ onMounted(() => { loadCategories(); loadData() })
 </script>
 
 <style scoped>
-.warning-text { color: #e6a23c; font-weight: 600; }
+/* 样式已由全局样式统一处理 */
 </style>

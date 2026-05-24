@@ -66,7 +66,7 @@
         </el-table-column>
         <el-table-column label="毛利润" width="120">
           <template #default="{ row }">
-            <span :style="{ color: (row.salesAmount - row.purchaseAmount) >= 0 ? '#67c23a' : '#f56c6c' }">
+            <span :class="(row.salesAmount - row.purchaseAmount) >= 0 ? 'text-success' : 'text-danger'">
               ¥{{ Number((row.salesAmount || 0) - (row.purchaseAmount || 0)).toFixed(2) }}
             </span>
           </template>
@@ -154,14 +154,14 @@ function renderChart() {
         name: '销售额',
         type: 'bar',
         data: dataList.value.map(d => d.salesAmount || 0),
-        itemStyle: { color: '#409eff' },
+        itemStyle: { color: '#8B9D83' },
         barMaxWidth: 30
       },
       {
         name: '进货成本',
         type: 'bar',
         data: dataList.value.map(d => d.purchaseAmount || 0),
-        itemStyle: { color: '#e6a23c' },
+        itemStyle: { color: '#C08E3A' },
         barMaxWidth: 30
       },
       {
@@ -169,8 +169,8 @@ function renderChart() {
         type: 'line',
         data: dataList.value.map(d => (d.salesAmount || 0) - (d.purchaseAmount || 0)),
         smooth: true,
-        lineStyle: { color: '#67c23a', width: 3 },
-        itemStyle: { color: '#67c23a' }
+        lineStyle: { color: '#606C38', width: 3 },
+        itemStyle: { color: '#606C38' }
       }
     ]
   })
@@ -194,10 +194,10 @@ onUnmounted(() => {
 
 <style scoped>
 .stat-card { text-align: center; }
-.stat-label { font-size: 14px; color: #909399; margin-bottom: 8px; }
-.stat-value { font-size: 24px; font-weight: 700; }
-.sales-text { color: #409eff; }
-.purchase-text { color: #e6a23c; }
-.profit-text { color: #67c23a; }
-.loss-text { color: #f56c6c; }
+.stat-label { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 8px; }
+.stat-value { font-size: var(--text-2xl); font-weight: var(--weight-bold); font-family: var(--font-display); font-variant-numeric: tabular-nums; }
+.sales-text { color: var(--color-sage); }
+.purchase-text { color: var(--color-ochre); }
+.profit-text { color: var(--color-moss); }
+.loss-text { color: var(--color-danger); }
 </style>

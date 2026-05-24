@@ -3,49 +3,69 @@
     <!-- 统计卡片 -->
     <el-row :gutter="16" class="stat-cards">
       <el-col :xs="12" :sm="6">
-        <el-card shadow="hover" class="stat-card stat-sales">
-          <div class="stat-label">今日销售额</div>
-          <div class="stat-value">¥{{ formatNumber(overview.todaySalesAmount) }}</div>
-          <div class="stat-count">{{ overview.todaySalesCount }} 笔订单</div>
-        </el-card>
+        <div class="stat-card stat-sales">
+          <div class="stat-icon">
+            <el-icon :size="24"><Money /></el-icon>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">今日销售额</div>
+            <div class="stat-value">¥{{ formatNumber(overview.todaySalesAmount) }}</div>
+            <div class="stat-count">{{ overview.todaySalesCount }} 笔订单</div>
+          </div>
+        </div>
       </el-col>
       <el-col :xs="12" :sm="6">
-        <el-card shadow="hover" class="stat-card stat-month">
-          <div class="stat-label">本月销售额</div>
-          <div class="stat-value">¥{{ formatNumber(overview.monthSalesAmount) }}</div>
-          <div class="stat-count">{{ overview.monthSalesCount }} 笔订单</div>
-        </el-card>
+        <div class="stat-card stat-month">
+          <div class="stat-icon">
+            <el-icon :size="24"><TrendCharts /></el-icon>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">本月销售额</div>
+            <div class="stat-value">¥{{ formatNumber(overview.monthSalesAmount) }}</div>
+            <div class="stat-count">{{ overview.monthSalesCount }} 笔订单</div>
+          </div>
+        </div>
       </el-col>
       <el-col :xs="12" :sm="6">
-        <el-card shadow="hover" class="stat-card stat-warning">
-          <div class="stat-label">库存预警</div>
-          <div class="stat-value warning-text">{{ overview.warningCount }}</div>
-          <div class="stat-count">件产品低于安全库存</div>
-        </el-card>
+        <div class="stat-card stat-warning">
+          <div class="stat-icon">
+            <el-icon :size="24"><WarningFilled /></el-icon>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">库存预警</div>
+            <div class="stat-value">{{ overview.warningCount }}</div>
+            <div class="stat-count">件产品低于安全库存</div>
+          </div>
+        </div>
       </el-col>
       <el-col :xs="12" :sm="6">
-        <el-card shadow="hover" class="stat-card stat-customer">
-          <div class="stat-label">本月新增客户</div>
-          <div class="stat-value">{{ overview.monthNewCustomers }}</div>
-          <div class="stat-count">本月订单 {{ overview.monthOrderCount }} 笔</div>
-        </el-card>
+        <div class="stat-card stat-customer">
+          <div class="stat-icon">
+            <el-icon :size="24"><User /></el-icon>
+          </div>
+          <div class="stat-info">
+            <div class="stat-label">本月新增客户</div>
+            <div class="stat-value">{{ overview.monthNewCustomers }}</div>
+            <div class="stat-count">本月订单 {{ overview.monthOrderCount }} 笔</div>
+          </div>
+        </div>
       </el-col>
     </el-row>
 
     <!-- 图表区域 -->
     <el-row :gutter="16" class="chart-row">
       <el-col :xs="24" :sm="14">
-        <el-card shadow="hover">
+        <el-card shadow="never" class="chart-card">
           <template #header>
-            <span>近30天销售趋势</span>
+            <span class="card-title">近30天销售趋势</span>
           </template>
           <div ref="trendChartRef" class="chart-container"></div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="10">
-        <el-card shadow="hover">
+        <el-card shadow="never" class="chart-card">
           <template #header>
-            <span>本月分类销售占比</span>
+            <span class="card-title">本月分类销售占比</span>
           </template>
           <div ref="pieChartRef" class="chart-container"></div>
         </el-card>
@@ -53,10 +73,10 @@
     </el-row>
 
     <!-- 库存预警列表 -->
-    <el-card shadow="hover" class="warning-card">
+    <el-card shadow="never" class="warning-card">
       <template #header>
         <div class="card-header-flex">
-          <span>库存预警产品</span>
+          <span class="card-title">库存预警产品</span>
           <el-button type="primary" text size="small" @click="$router.push('/inventory/warnings')">查看全部</el-button>
         </div>
       </template>
@@ -106,6 +126,9 @@ const pieChartRef = ref(null)
 let trendChart = null
 let pieChart = null
 
+// 有机色系调色板
+const organicPalette = ['#8B9D83', '#B08B6E', '#C66B3D', '#C08E3A', '#606C38', '#a3b39c', '#c4a48a']
+
 function formatNumber(num) {
   if (num == null) return '0.00'
   return Number(num).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -131,21 +154,40 @@ async function loadSalesTrend() {
     const data = res.data
     if (trendChart && data) {
       trendChart.setOption({
-        tooltip: { trigger: 'axis' },
+        tooltip: {
+          trigger: 'axis',
+          backgroundColor: 'rgba(255,255,255,0.95)',
+          borderColor: '#d4c8b4',
+          textStyle: { color: '#3d3225' }
+        },
         grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
-        xAxis: { type: 'category', data: data.dates, axisLabel: { rotate: 45, fontSize: 11 } },
-        yAxis: { type: 'value', name: '销售额(元)' },
+        xAxis: {
+          type: 'category',
+          data: data.dates,
+          axisLabel: { rotate: 45, fontSize: 11, color: '#9a8b7a' },
+          axisLine: { lineStyle: { color: '#d4c8b4' } }
+        },
+        yAxis: {
+          type: 'value',
+          name: '销售额(元)',
+          axisLabel: { color: '#9a8b7a' },
+          splitLine: { lineStyle: { color: '#ece4d8' } }
+        },
         series: [{
           name: '销售额',
           type: 'line',
           smooth: true,
           data: data.amounts,
-          areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: 'rgba(102,126,234,0.3)' },
-            { offset: 1, color: 'rgba(102,126,234,0.02)' }
-          ])},
-          lineStyle: { color: '#667eea', width: 2 },
-          itemStyle: { color: '#667eea' }
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: 'rgba(139, 157, 131, 0.35)' },
+              { offset: 1, color: 'rgba(139, 157, 131, 0.02)' }
+            ])
+          },
+          lineStyle: { color: '#8B9D83', width: 2.5 },
+          itemStyle: { color: '#8B9D83' },
+          symbol: 'circle',
+          symbolSize: 6
         }]
       })
     }
@@ -158,16 +200,37 @@ async function loadCategorySales() {
     const data = res.data || []
     if (pieChart && data.length > 0) {
       pieChart.setOption({
-        tooltip: { trigger: 'item', formatter: '{b}: ¥{c} ({d}%)' },
-        legend: { bottom: '0', left: 'center' },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}: ¥{c} ({d}%)',
+          backgroundColor: 'rgba(255,255,255,0.95)',
+          borderColor: '#d4c8b4',
+          textStyle: { color: '#3d3225' }
+        },
+        legend: {
+          bottom: '0',
+          left: 'center',
+          textStyle: { color: '#6b5d4f' }
+        },
         series: [{
           type: 'pie',
           radius: ['40%', '65%'],
           center: ['50%', '45%'],
           avoidLabelOverlap: false,
           label: { show: false },
-          emphasis: { label: { show: true, fontSize: 14, fontWeight: 'bold' } },
-          data: data.map(item => ({ name: item.categoryName, value: item.amount }))
+          emphasis: {
+            label: { show: true, fontSize: 14, fontWeight: 'bold', color: '#3d3225' }
+          },
+          itemStyle: {
+            borderRadius: 6,
+            borderColor: '#fff',
+            borderWidth: 2
+          },
+          data: data.map((item, index) => ({
+            name: item.categoryName,
+            value: item.amount,
+            itemStyle: { color: organicPalette[index % organicPalette.length] }
+          }))
         }]
       })
     }
@@ -208,43 +271,102 @@ onUnmounted(() => {
 }
 
 .stat-cards {
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
 }
 
 .stat-card {
-  text-align: center;
-  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+  transition: all var(--transition-normal);
+}
+
+.stat-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-sales .stat-icon {
+  background: linear-gradient(135deg, #8B9D83 0%, #606C38 100%);
+  color: #fff;
+}
+
+.stat-month .stat-icon {
+  background: linear-gradient(135deg, #B08B6E 0%, #967458 100%);
+  color: #fff;
+}
+
+.stat-warning .stat-icon {
+  background: linear-gradient(135deg, #C08E3A 0%, #a07530 100%);
+  color: #fff;
+}
+
+.stat-customer .stat-icon {
+  background: linear-gradient(135deg, #7a8a80 0%, #5a6a60 100%);
+  color: #fff;
+}
+
+.stat-info {
+  flex: 1;
+  min-width: 0;
 }
 
 .stat-label {
-  font-size: 14px;
-  color: #909399;
-  margin-bottom: 8px;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-bottom: 4px;
 }
 
 .stat-value {
-  font-size: 28px;
-  font-weight: 700;
-  color: #303133;
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
   line-height: 1.2;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
 }
 
 .stat-count {
-  font-size: 12px;
-  color: #c0c4cc;
-  margin-top: 6px;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-top: 4px;
 }
 
-.stat-sales .stat-value { color: #409eff; }
-.stat-month .stat-value { color: #67c23a; }
-.stat-warning .stat-value { color: #e6a23c; }
-.stat-customer .stat-value { color: #9b59b6; }
+.stat-sales .stat-value { color: var(--color-moss); }
+.stat-month .stat-value { color: var(--color-clay); }
+.stat-warning .stat-value { color: var(--color-ochre); }
+.stat-customer .stat-value { color: var(--color-info); }
 
-.warning-text { color: #e6a23c !important; font-weight: 600; }
-.danger-text { color: #f56c6c; font-weight: 600; }
+.warning-text { color: var(--color-warning); font-weight: var(--weight-semibold); }
+.danger-text { color: var(--color-danger); font-weight: var(--weight-semibold); }
 
 .chart-row {
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
+}
+
+.chart-card {
+  border: 1px solid var(--border-light);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
 }
 
 .chart-container {
@@ -259,6 +381,7 @@ onUnmounted(() => {
 }
 
 .warning-card {
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--border-light);
 }
 </style>

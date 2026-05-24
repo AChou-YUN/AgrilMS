@@ -28,7 +28,7 @@
         <el-table-column prop="quantity" label="数量" width="80" />
         <el-table-column prop="returnQuantity" label="已退货" width="80">
           <template #default="{ row }">
-            <span :style="{ color: row.returnQuantity > 0 ? '#f56c6c' : '' }">{{ row.returnQuantity || 0 }}</span>
+            <span :class="{ 'text-danger': row.returnQuantity > 0 }">{{ row.returnQuantity || 0 }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="unitPrice" label="售价" width="100">

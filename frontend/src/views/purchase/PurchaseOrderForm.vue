@@ -46,7 +46,7 @@
         </el-table>
         <div style="margin:12px 0;"><el-button type="primary" plain @click="addItem">添加明细</el-button></div>
         <div style="text-align:right;font-size:16px;margin:16px 0;">
-          总金额：<span style="color:#f56c6c;font-weight:700;">¥{{ totalAmount.toFixed(2) }}</span>
+          总金额：<span class="danger-text">¥{{ totalAmount.toFixed(2) }}</span>
         </div>
         <el-form-item>
           <el-button type="primary" :loading="loading" @click="handleSubmit">提交</el-button>

@@ -134,7 +134,7 @@ function renderChart() {
         name: '进货额',
         type: 'bar',
         data: dataList.value.map(d => d.amount || 0),
-        itemStyle: { color: '#67c23a' },
+        itemStyle: { color: '#B08B6E' },
         barMaxWidth: 40
       },
       {
@@ -143,8 +143,8 @@ function renderChart() {
         yAxisIndex: 1,
         data: dataList.value.map(d => d.count || 0),
         smooth: true,
-        lineStyle: { color: '#e6a23c' },
-        itemStyle: { color: '#e6a23c' }
+        lineStyle: { color: '#C08E3A' },
+        itemStyle: { color: '#C08E3A' }
       }
     ]
   })

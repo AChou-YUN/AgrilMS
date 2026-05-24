@@ -43,7 +43,7 @@
         </el-table-column>
         <el-table-column label="变动数量" width="100">
           <template #default="{ row }">
-            <span :style="{ color: row.changeQuantity > 0 ? '#67c23a' : '#f56c6c' }">
+            <span :class="row.changeQuantity > 0 ? 'text-success' : 'text-danger'">
               {{ row.changeQuantity > 0 ? '+' : '' }}{{ row.changeQuantity }}
             </span>
           </template>
