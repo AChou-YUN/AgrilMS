@@ -35,10 +35,10 @@
         <span>销售数据明细</span>
       </div>
       <el-table :data="dataList" v-loading="loading" stripe>
-        <el-table-column prop="period" label="时间" min-width="120" />
-        <el-table-column prop="orderCount" label="订单数" width="100" />
-        <el-table-column prop="totalAmount" label="销售额" width="120">
-          <template #default="{ row }">¥{{ Number(row.totalAmount || 0).toFixed(2) }}</template>
+        <el-table-column prop="date" label="时间" min-width="120" />
+        <el-table-column prop="count" label="订单数" width="100" />
+        <el-table-column prop="amount" label="销售额" width="120">
+          <template #default="{ row }">¥{{ Number(row.amount || 0).toFixed(2) }}</template>
         </el-table-column>
       </el-table>
     </div>
@@ -120,7 +120,7 @@ function renderChart() {
     grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
     xAxis: {
       type: 'category',
-      data: dataList.value.map(d => d.period),
+      data: dataList.value.map(d => d.date),
       axisLabel: { rotate: 45, fontSize: 11 }
     },
     yAxis: [
@@ -131,7 +131,7 @@ function renderChart() {
       {
         name: '销售额',
         type: 'bar',
-        data: dataList.value.map(d => d.totalAmount || 0),
+        data: dataList.value.map(d => d.amount || 0),
         itemStyle: { color: '#409eff' },
         barMaxWidth: 40
       },
@@ -139,7 +139,7 @@ function renderChart() {
         name: '订单数',
         type: 'line',
         yAxisIndex: 1,
-        data: dataList.value.map(d => d.orderCount || 0),
+        data: dataList.value.map(d => d.count || 0),
         smooth: true,
         lineStyle: { color: '#e6a23c' },
         itemStyle: { color: '#e6a23c' }
