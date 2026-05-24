@@ -28,24 +28,24 @@
         <el-button type="primary" @click="$router.push('/products/add')">新增产品</el-button>
       </div>
       <el-table :data="productList" v-loading="loading" stripe>
-        <el-table-column prop="name" label="产品名称" min-width="140" />
-        <el-table-column prop="categoryName" label="分类" width="100" />
-        <el-table-column prop="specification" label="规格" width="100" />
-        <el-table-column prop="unitName" label="单位" width="60" />
-        <el-table-column prop="currentStock" label="当前库存" width="90">
+        <el-table-column prop="name" label="产品名称" min-width="120" />
+        <el-table-column prop="categoryName" label="分类" min-width="100" />
+        <el-table-column prop="specification" label="规格" min-width="100" />
+        <el-table-column prop="unitName" label="单位" min-width="70" />
+        <el-table-column prop="currentStock" label="当前库存" min-width="90">
           <template #default="{ row }">
             <span :class="{ 'warning-text': row.currentStock < row.safetyStock }">{{ row.currentStock }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="safetyStock" label="安全库存" width="90" />
-        <el-table-column prop="purchasePrice" label="参考进价" width="90" />
-        <el-table-column prop="sellingPrice" label="参考售价" width="90" />
-        <el-table-column label="状态" width="70">
+        <el-table-column prop="safetyStock" label="安全库存" min-width="90" />
+        <el-table-column prop="purchasePrice" label="参考进价" min-width="90" />
+        <el-table-column prop="sellingPrice" label="参考售价" min-width="90" />
+        <el-table-column label="状态" min-width="80">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : 'info'" size="small">{{ row.status === 1 ? '上架' : '下架' }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="180" fixed="right">
+        <el-table-column label="操作" width="240" fixed="right">
           <template #default="{ row }">
             <el-button type="primary" text size="small" @click="$router.push('/products/edit/' + row.id)">编辑</el-button>
             <el-button :type="row.status === 1 ? 'warning' : 'success'" text size="small" @click="toggleStatus(row)">{{ row.status === 1 ? '下架' : '上架' }}</el-button>
@@ -114,5 +114,4 @@ onMounted(() => { loadCategories(); loadData() })
 </script>
 
 <style scoped>
-/* 样式已由全局样式和 Element Plus 覆盖统一处理 */
 </style>

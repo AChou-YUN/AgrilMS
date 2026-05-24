@@ -117,10 +117,13 @@
   background: #FAFBFC;
 }
 
-/* ── 操作按钮对齐修复 ── */
-.el-table .cell {
+/* ── 分页器区域修复 ── */
+.pagination-area {
   display: flex;
-  align-items: center;
+  justify-content: flex-end;
+  margin-top: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border-light);
 }
 
 /* ── 分页 ── */
@@ -210,6 +213,25 @@
 /* ── Descriptions ── */
 .el-descriptions {
   --el-descriptions-table-border: 1px solid var(--border-light);
+}
+
+/* ── 表格所有单元格内容居中 ── */
+.el-table th.el-table__cell .cell {
+  text-align: center;
+  justify-content: center;
+}
+
+.el-table .el-table__body-wrapper .el-table__row td.el-table__cell .cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* ── 表格操作列：按钮居中且不换行 ── */
+.el-table .el-table__body-wrapper .el-table__row td:last-child .cell {
+  gap: 4px;
+  flex-wrap: nowrap;
 }
 
 /* ── Rate ── */

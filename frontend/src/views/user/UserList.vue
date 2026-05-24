@@ -28,17 +28,17 @@
       </div>
 
       <el-table :data="userList" v-loading="loading" stripe>
-        <el-table-column prop="username" label="用户名" min-width="100" />
+        <el-table-column prop="username" label="用户名" min-width="120" />
         <el-table-column prop="realName" label="真实姓名" min-width="100" />
-        <el-table-column prop="phone" label="手机号" min-width="120" />
-        <el-table-column label="角色" min-width="150">
+        <el-table-column prop="phone" label="手机号" min-width="130" />
+        <el-table-column label="角色" min-width="130">
           <template #default="{ row }">
             <el-tag v-for="role in row.roles" :key="role.id" size="small" class="role-tag">
               {{ role.roleName }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="状态" width="80">
+        <el-table-column label="状态" min-width="80">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : 'danger'" size="small">
               {{ row.status === 1 ? '启用' : '禁用' }}

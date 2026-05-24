@@ -23,16 +23,16 @@
       </div>
       <el-table :data="list" v-loading="loading" stripe row-class-name="warning-row">
         <el-table-column prop="productName" label="产品名称" min-width="140" />
-        <el-table-column prop="categoryName" label="分类" width="100" />
-        <el-table-column prop="specification" label="规格" width="100" />
-        <el-table-column prop="unitName" label="单位" width="60" />
-        <el-table-column prop="currentStock" label="当前库存" width="100">
+        <el-table-column prop="categoryName" label="分类" min-width="100" />
+        <el-table-column prop="specification" label="规格" min-width="100" />
+        <el-table-column prop="unitName" label="单位" min-width="60" />
+        <el-table-column prop="currentStock" label="当前库存" min-width="100">
           <template #default="{ row }">
             <span class="danger-text">{{ row.currentStock }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="safetyStock" label="安全库存" width="100" />
-        <el-table-column label="缺口数量" width="100">
+        <el-table-column prop="safetyStock" label="安全库存" min-width="100" />
+        <el-table-column label="缺口数量" min-width="100">
           <template #default="{ row }">
             <span class="danger-text">{{ row.safetyStock - row.currentStock }}</span>
           </template>

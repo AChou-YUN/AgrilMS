@@ -36,22 +36,22 @@
       </div>
       <el-table :data="list" v-loading="loading" stripe>
         <el-table-column prop="productName" label="产品名称" min-width="140" />
-        <el-table-column label="变动类型" width="100">
+        <el-table-column label="变动类型" min-width="100">
           <template #default="{ row }">
             <el-tag :type="changeTypeTag(row.changeType)" size="small">{{ changeTypeText(row.changeType) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="变动数量" width="100">
+        <el-table-column label="变动数量" min-width="100">
           <template #default="{ row }">
             <span :class="row.changeQuantity > 0 ? 'text-success' : 'text-danger'">
               {{ row.changeQuantity > 0 ? '+' : '' }}{{ row.changeQuantity }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column prop="beforeStock" label="变动前库存" width="100" />
-        <el-table-column prop="afterStock" label="变动后库存" width="100" />
+        <el-table-column prop="beforeStock" label="变动前库存" min-width="100" />
+        <el-table-column prop="afterStock" label="变动后库存" min-width="100" />
         <el-table-column prop="relatedOrderNo" label="关联单号" min-width="140" />
-        <el-table-column prop="operatorName" label="操作人" width="90" />
+        <el-table-column prop="operatorName" label="操作人" min-width="90" />
         <el-table-column prop="createTime" label="时间" min-width="160">
           <template #default="{ row }">{{ formatTime(row.createTime) }}</template>
         </el-table-column>

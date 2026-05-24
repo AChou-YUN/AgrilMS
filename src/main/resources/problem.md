@@ -118,3 +118,88 @@ public class MyBatisConfig {
 
 **经验总结：**  
 Spring Boot 4.0.6 与 mybatis-spring-boot-starter 3.0.3 的自动配置不兼容。当遇到 `SqlSessionFactory` 或 `sqlSessionTemplate` 缺失的错误时，需手动在配置类中创建这两个 Bean。这也属于 Spring Boot 4.0.x breaking changes 的范畴。
+
+---
+
+## 问题4：Vue3 `<style scoped>` 穿透 Element Plus 组件样式的正确写法
+
+**发现阶段：** 前端UI优化阶段 — 侧边栏导航图标与文字对齐问题  
+**表现：** Element Plus `el-menu` 的 `el-sub-menu`（有展开箭头的二级菜单）与 `el-menu-item`（一级菜单）的图标和文字没有水平对齐。子菜单的图标和文字整体偏移，与一级菜单不一致。
+
+**问题分析：**  
+1. **Element Plus 内部布局**：`.el-sub-menu__title` 内部使用 `display: flex` + `justify-content: space-between`，导致子元素（图标、文字、箭头）被分散排列。箭头图标在文档流中占据空间，使文字位置偏移。
+2. **Vue3 `<style scoped>` 的 `:deep()` 选择器写法错误**：
+   ```css
+   /* ❌ 错误写法：scoped 的 .aside-menu 属性选择器无法匹配 Element Plus 子元素 */
+   .aside-menu .el-sub-menu__title { ... }
+   :deep(.aside-menu .el-sub-menu__icon-arrow) { ... }
+   
+   /* ✅ 正确写法：:deep() 应该放在父组件类名之前，让 scoped 属性正确穿透 */
+   :deep(.aside-menu) .el-sub-menu__title { ... }
+   :deep(.aside-menu) .el-sub-menu__icon-arrow { ... }
+   ```
+
+**解决方案：**  
+1. 使用正确的 `:deep()` 穿透写法 `:deep(.aside-menu) .el-sub-menu__title`
+2. 强制 `.el-sub-menu__title` 的 `justify-content: flex-start` 覆盖 Element Plus 默认的 `space-between`
+3. 将展开箭头 `.el-sub-menu__icon-arrow` 改为 `position: absolute` 脱离文档流，固定到最右侧
+4. 一级菜单和子菜单标题统一 `padding-left: 20px`，确保图标起点一致
+
+**修改文件：** `frontend/src/layout/MainLayout.vue`
+
+```css
+/* ===== 正确的穿透写法 ===== */
+
+/* 一级菜单项 */
+:deep(.aside-menu) .el-menu-item {
+  padding-left: 20px !important;
+  height: 42px !important;
+  line-height: 42px !important;
+  margin: 2px 8px !important;
+  border-radius: 4px;
+}
+
+/* 二级菜单标题 - 关键：覆盖 space-between 为 flex-start */
+:deep(.aside-menu) .el-sub-menu__title {
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center;
+  padding-left: 20px !important;
+  padding-right: 36px !important;
+  height: 42px !important;
+  line-height: 42px !important;
+  margin: 2px 8px !important;
+  border-radius: 4px;
+  position: relative;
+}
+
+/* 图标统一样式 */
+:deep(.aside-menu) .el-menu-item .el-icon,
+:deep(.aside-menu) .el-sub-menu__title .el-icon {
+  margin-right: 8px;
+  font-size: 16px;
+  width: 16px;
+  flex-shrink: 0;
+}
+
+/* 展开箭头绝对定位到最右侧 */
+:deep(.aside-menu) .el-sub-menu__icon-arrow {
+  position: absolute !important;
+  right: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%);
+  font-size: 12px;
+  width: auto !important;
+  margin: 0 !important;
+}
+
+/* 子菜单子项缩进 */
+:deep(.aside-menu) .el-sub-menu .el-menu-item {
+  padding-left: 50px !important;
+}
+```
+
+**经验总结：**  
+- Vue3 `<style scoped>` 中 `:deep()` 的正确语法是 `:deep(.parent) .child`，而非 `:deep(.parent .child)`。前者让 `.parent` 上的 scoped 属性选择器作用于父组件，然后 `.child` 可以匹配到子组件的内部元素。
+- Element Plus 的 `el-sub-menu__title` 默认使用 `justify-content: space-between`，如果需要让内容左对齐（与其他菜单项一致），必须显式覆盖为 `flex-start`。
+- 当子组件有内部布局（如 flex space-between）影响外部对齐时，最可靠的方案是将干扰元素（如箭头）用 `position: absolute` 脱离文档流。

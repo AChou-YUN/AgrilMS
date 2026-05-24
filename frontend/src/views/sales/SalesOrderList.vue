@@ -37,17 +37,17 @@
       <el-table :data="list" v-loading="loading" stripe>
         <el-table-column prop="orderNo" label="销售单号" min-width="140" />
         <el-table-column prop="customerName" label="客户" min-width="100" />
-        <el-table-column prop="totalAmount" label="总金额" width="100">
+        <el-table-column prop="totalAmount" label="总金额" min-width="100">
           <template #default="{ row }">¥{{ Number(row.totalAmount).toFixed(2) }}</template>
         </el-table-column>
-        <el-table-column prop="paymentMethodText" label="付款方式" width="90" />
-        <el-table-column label="状态" width="90">
+        <el-table-column prop="paymentMethodText" label="付款方式" min-width="90" />
+        <el-table-column label="状态" min-width="90">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : row.status === 2 ? 'danger' : 'warning'" size="small">{{ row.statusText }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="orderDate" label="销售日期" width="110" />
-        <el-table-column prop="operatorName" label="操作人" width="90" />
+        <el-table-column prop="orderDate" label="销售日期" min-width="110" />
+        <el-table-column prop="operatorName" label="操作人" min-width="90" />
         <el-table-column label="操作" width="150" fixed="right">
           <template #default="{ row }">
             <el-button type="primary" text size="small" @click="$router.push('/sales-orders/' + row.id)">详情</el-button>

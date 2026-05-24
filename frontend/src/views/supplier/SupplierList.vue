@@ -23,20 +23,20 @@
       </div>
       <el-table :data="list" v-loading="loading" stripe>
         <el-table-column prop="name" label="供应商名称" min-width="140" />
-        <el-table-column prop="contactPerson" label="联系人" width="100" />
-        <el-table-column prop="phone" label="联系电话" width="120" />
+        <el-table-column prop="contactPerson" label="联系人" min-width="100" />
+        <el-table-column prop="phone" label="联系电话" min-width="120" />
         <el-table-column prop="address" label="地址" min-width="160" />
-        <el-table-column label="信用等级" width="100">
+        <el-table-column label="信用等级" min-width="100">
           <template #default="{ row }">
             <el-rate v-model="row.creditLevel" disabled :max="5" />
           </template>
         </el-table-column>
-        <el-table-column label="状态" width="70">
+        <el-table-column label="状态" min-width="70">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : 'danger'" size="small">{{ row.status === 1 ? '启用' : '禁用' }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="180" fixed="right">
+        <el-table-column label="操作" width="240" fixed="right">
           <template #default="{ row }">
             <el-button type="primary" text size="small" @click="showDialog(row)">编辑</el-button>
             <el-button :type="row.status === 1 ? 'warning' : 'success'" text size="small" @click="toggleStatus(row)">{{ row.status === 1 ? '禁用' : '启用' }}</el-button>
@@ -127,3 +127,6 @@ async function handleDelete(id) {
 
 onMounted(loadData)
 </script>
+
+<style scoped>
+</style>

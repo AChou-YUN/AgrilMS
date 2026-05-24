@@ -24,7 +24,7 @@
         <el-table-column prop="phone" label="手机号" min-width="120" />
         <el-table-column prop="address" label="地址" min-width="180" />
         <el-table-column prop="preference" label="购买偏好" min-width="140" />
-        <el-table-column label="操作" width="150" fixed="right">
+        <el-table-column label="操作" width="180" fixed="right">
           <template #default="{ row }">
             <el-button type="primary" text size="small" @click="showDialog(row)">编辑</el-button>
             <el-popconfirm title="确定删除此客户？" @confirm="handleDelete(row.id)">

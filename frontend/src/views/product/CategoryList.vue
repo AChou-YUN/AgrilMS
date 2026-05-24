@@ -6,15 +6,14 @@
         <el-button type="primary" @click="showDialog()">新增分类</el-button>
       </div>
       <el-table :data="list" v-loading="loading" stripe>
-        <el-table-column prop="id" label="ID" width="60" />
+        <el-table-column prop="id" label="ID" min-width="60" />
         <el-table-column prop="name" label="分类名称" min-width="150" />
         <el-table-column prop="description" label="描述" min-width="200" />
-        <el-table-column prop="productCount" label="商品数量" width="90" />
-        <el-table-column prop="sortOrder" label="排序" width="70" />
-        <el-table-column prop="createdAt" label="创建时间" width="160">
-          <template #default="{ row }">{{ formatDate(row.createdAt) }}</template>
+        <el-table-column prop="sortOrder" label="排序" min-width="70" />
+        <el-table-column prop="createTime" label="创建时间" min-width="160">
+          <template #default="{ row }">{{ formatDate(row.createTime) }}</template>
         </el-table-column>
-        <el-table-column label="操作" width="150">
+        <el-table-column label="操作" width="150" fixed="right">
           <template #default="{ row }">
             <el-button type="primary" text size="small" @click="showDialog(row)">编辑</el-button>
             <el-popconfirm title="确定删除此分类？" @confirm="handleDelete(row.id)">
