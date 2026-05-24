@@ -31,3 +31,28 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Frontend ###
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.*.local
+
+### Logs ###
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.pid
+*.seed
+
+### OS Files ###
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+### Java Debug Tools ###
+BcryptGen.java
+
+### Package Lock ###
+frontend/package-lock.json

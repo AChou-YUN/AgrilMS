@@ -1,0 +1,169 @@
+/* ========== 全局样式 ========== */
+
+/* 重置默认样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #app {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c0c4cc;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* 链接样式 */
+a {
+  color: #409eff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #66b1ff;
+}
+
+/* 通用页面容器样式 */
+.page-container {
+  padding: 20px;
+}
+
+/* 搜索栏样式 */
+.search-bar {
+  margin-bottom: 16px;
+  padding: 16px 20px 0;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* 表格卡片样式 */
+.table-card {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  padding: 16px;
+}
+
+/* 表格操作栏 */
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* 分页区域 */
+.pagination-area {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+/* 低库存高亮行 */
+.el-table .warning-row {
+  --el-table-tr-bg-color: #fdf6ec;
+}
+
+.el-table .danger-row {
+  --el-table-tr-bg-color: #fef0f0;
+}
+
+/* 状态标签统一间距 */
+.el-tag + .el-tag {
+  margin-left: 8px;
+}
+
+/* ===== 颜色工具类 ===== */
+.text-success { color: #67c23a; }
+.text-warning { color: #e6a23c; }
+.text-danger { color: #f56c6c; }
+.text-primary { color: #409eff; }
+.text-info { color: #909399; }
+.text-muted { color: #c0c4cc; }
+
+.text-bold { font-weight: 600; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* ===== 间距工具类 ===== */
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mb-8 { margin-bottom: 8px; }
+.mb-16 { margin-bottom: 16px; }
+.p-16 { padding: 16px; }
+
+/* ===== 弹性布局 ===== */
+.flex { display: flex; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.flex-center { display: flex; justify-content: center; align-items: center; }
+.flex-1 { flex: 1; }
+
+/* ===== 卡片阴影 ===== */
+.shadow-card {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+}
+
+/* ===== 打印样式 ===== */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .layout-header,
+  .layout-aside {
+    display: none !important;
+  }
+
+  .layout-content {
+    padding: 0 !important;
+    height: auto !important;
+  }
+}
+
+/* ===== 动画过渡 ===== */
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.3s ease;
+}
+
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* ===== 空状态居中 ===== */
+.empty-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
