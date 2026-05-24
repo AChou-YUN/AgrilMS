@@ -154,14 +154,14 @@ function renderChart() {
         name: '销售额',
         type: 'bar',
         data: dataList.value.map(d => d.salesAmount || 0),
-        itemStyle: { color: '#8B9D83' },
+        itemStyle: { color: '#4B6EAF' },
         barMaxWidth: 30
       },
       {
         name: '进货成本',
         type: 'bar',
         data: dataList.value.map(d => d.purchaseAmount || 0),
-        itemStyle: { color: '#C08E3A' },
+        itemStyle: { color: '#C68A2E' },
         barMaxWidth: 30
       },
       {
@@ -169,8 +169,8 @@ function renderChart() {
         type: 'line',
         data: dataList.value.map(d => (d.salesAmount || 0) - (d.purchaseAmount || 0)),
         smooth: true,
-        lineStyle: { color: '#606C38', width: 3 },
-        itemStyle: { color: '#606C38' }
+        lineStyle: { color: '#529B5A', width: 3 },
+        itemStyle: { color: '#529B5A' }
       }
     ]
   })
@@ -195,9 +195,9 @@ onUnmounted(() => {
 <style scoped>
 .stat-card { text-align: center; }
 .stat-label { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 8px; }
-.stat-value { font-size: var(--text-2xl); font-weight: var(--weight-bold); font-family: var(--font-display); font-variant-numeric: tabular-nums; }
-.sales-text { color: var(--color-sage); }
-.purchase-text { color: var(--color-ochre); }
-.profit-text { color: var(--color-moss); }
+.stat-value { font-size: var(--text-2xl); font-weight: var(--weight-bold); font-variant-numeric: tabular-nums; }
+.sales-text { color: var(--color-primary); }
+.purchase-text { color: var(--color-warning); }
+.profit-text { color: var(--color-success); }
 .loss-text { color: var(--color-danger); }
 </style>

@@ -1,40 +1,45 @@
 <template>
   <div class="page-container">
-    <el-card shadow="hover">
-      <template #header><span>个人中心</span></template>
-      <el-form ref="formRef" :model="form" :rules="rules" label-width="100px" style="max-width: 500px;">
-        <el-form-item label="用户名">
-          <el-input :model-value="userStore.username" disabled />
-        </el-form-item>
-        <el-form-item label="真实姓名" prop="realName">
-          <el-input v-model="form.realName" placeholder="请输入真实姓名" />
-        </el-form-item>
-        <el-form-item label="手机号" prop="phone">
-          <el-input v-model="form.phone" placeholder="请输入手机号" />
-        </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="form.email" placeholder="请输入邮箱" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" :loading="loading" @click="handleSave">保存修改</el-button>
-        </el-form-item>
-      </el-form>
-    </el-card>
-
-    <el-card shadow="hover" style="margin-top: 16px;">
-      <template #header><span>修改密码</span></template>
-      <el-form ref="pwdFormRef" :model="pwdForm" :rules="pwdRules" label-width="100px" style="max-width: 500px;">
-        <el-form-item label="原密码" prop="oldPassword">
-          <el-input v-model="pwdForm.oldPassword" type="password" show-password placeholder="请输入原密码" />
-        </el-form-item>
-        <el-form-item label="新密码" prop="newPassword">
-          <el-input v-model="pwdForm.newPassword" type="password" show-password placeholder="请输入新密码" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" :loading="pwdLoading" @click="handleChangePwd">修改密码</el-button>
-        </el-form-item>
-      </el-form>
-    </el-card>
+    <el-row :gutter="16">
+      <el-col :xs="24" :sm="14">
+        <el-card shadow="never">
+          <template #header><span class="card-title">个人信息</span></template>
+          <el-form ref="formRef" :model="form" :rules="rules" label-width="100px" style="max-width: 480px;">
+            <el-form-item label="用户名">
+              <el-input :model-value="userStore.username" disabled />
+            </el-form-item>
+            <el-form-item label="真实姓名" prop="realName">
+              <el-input v-model="form.realName" placeholder="请输入真实姓名" />
+            </el-form-item>
+            <el-form-item label="手机号" prop="phone">
+              <el-input v-model="form.phone" placeholder="请输入手机号" />
+            </el-form-item>
+            <el-form-item label="邮箱" prop="email">
+              <el-input v-model="form.email" placeholder="请输入邮箱" />
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" :loading="loading" @click="handleSave">保存修改</el-button>
+            </el-form-item>
+          </el-form>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="10">
+        <el-card shadow="never">
+          <template #header><span class="card-title">修改密码</span></template>
+          <el-form ref="pwdFormRef" :model="pwdForm" :rules="pwdRules" label-width="100px" style="max-width: 400px;">
+            <el-form-item label="原密码" prop="oldPassword">
+              <el-input v-model="pwdForm.oldPassword" type="password" show-password placeholder="请输入原密码" />
+            </el-form-item>
+            <el-form-item label="新密码" prop="newPassword">
+              <el-input v-model="pwdForm.newPassword" type="password" show-password placeholder="请输入新密码" />
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" :loading="pwdLoading" @click="handleChangePwd">修改密码</el-button>
+            </el-form-item>
+          </el-form>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -98,3 +103,11 @@ async function handleChangePwd() {
   })
 }
 </script>
+
+<style scoped>
+.card-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+</style>

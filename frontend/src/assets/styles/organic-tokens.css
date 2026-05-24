@@ -1,66 +1,64 @@
 /* ============================================
-   Organic Design Tokens - 农资进销存管理系统
+   Design Tokens - 经典管理系统风格
    ============================================ */
 
 :root {
-  /* ── 色彩体系（大地色系） ── */
-  --color-sage: #8B9D83;          /* 鼠尾草绿 - 主色 */
-  --color-sage-light: #a3b39c;
-  --color-sage-dark: #6b7d63;
+  /* ── 色彩体系（经典蓝灰色系） ── */
+  --color-primary: #4B6EAF;
+  --color-primary-light: #6B8EC5;
+  --color-primary-dark: #3A5A95;
+  --color-primary-bg: #EBF0F7;
   
-  --color-clay: #B08B6E;          /* 陶土棕 - 辅助色 */
-  --color-clay-light: #c4a48a;
-  --color-clay-dark: #967458;
-  
-  --color-terracotta: #C66B3D;    /* 赤陶 - 强调色/警告 */
-  --color-terracotta-light: #d4875e;
-  --color-terracotta-dark: #a85630;
-  
-  --color-ochre: #C08E3A;         /* 赭石黄 - 警告 */
-  --color-ochre-light: #d1a55a;
-  --color-ochre-dark: #a07530;
-  
-  --color-moss: #606C38;          /* 苔藓绿 - 深色/标题 */
-  --color-moss-light: #7a8a50;
-  --color-moss-dark: #4a5428;
+  --color-success: #529B5A;
+  --color-success-light: #E8F5E9;
+  --color-warning: #C68A2E;
+  --color-warning-light: #FFF8E1;
+  --color-danger: #C44040;
+  --color-danger-light: #FDECEA;
+  --color-info: #78909C;
+  --color-info-light: #ECEFF1;
   
   /* ── 表面色 ── */
-  --surface-sand: #E8DCC7;        /* 沙色 - 主背景 */
-  --surface-oat: #D4B895;         /* 燕麦色 - 卡片背景 */
-  --surface-sand-light: #f0e8d8;
-  --surface-oat-light: #e0ccab;
+  --surface-bg: #F0F2F5;
+  --surface-card: #FFFFFF;
+  --surface-hover: #F5F7FA;
+  --surface-active: #EBF0F7;
   
   /* ── 文字色 ── */
-  --text-primary: #3d3225;        /* 深棕色 - 主文字 */
-  --text-secondary: #6b5d4f;      /* 中棕色 - 次要文字 */
-  --text-muted: #9a8b7a;          /* 浅棕色 - 辅助文字 */
-  --text-on-dark: #f0e8d8;        /* 深色背景上的文字 */
-  
-  /* ── 状态色 ── */
-  --color-success: #8B9D83;       /* 成功 - 鼠尾草绿 */
-  --color-warning: #C08E3A;       /* 警告 - 赭石黄 */
-  --color-danger: #C66B3D;        /* 危险 - 赤陶 */
-  --color-info: #7a8a80;          /* 信息 - 灰绿 */
+  --text-primary: #1F2D3D;
+  --text-regular: #3E4C59;
+  --text-secondary: #697B8C;
+  --text-muted: #9DAAB6;
+  --text-placeholder: #B0BEC5;
+  --text-on-primary: #FFFFFF;
   
   /* ── 边框色 ── */
-  --border-light: #d4c8b4;
-  --border-medium: #b8a890;
-  --border-dark: #9a8b7a;
+  --border-light: #E4E8ED;
+  --border-base: #D4DAE0;
+  --border-dark: #B8C0CC;
+  
+  /* ── 侧边栏 ── */
+  --sidebar-bg: #1D2B3D;
+  --sidebar-hover: rgba(255,255,255,0.08);
+  --sidebar-active: rgba(75,110,175,0.35);
+  --sidebar-text: rgba(255,255,255,0.65);
+  --sidebar-text-active: #FFFFFF;
+  --sidebar-header-bg: #152232;
   
   /* ── 字体 ── */
-  --font-display: 'Fraunces', 'Georgia', 'Times New Roman', serif;
-  --font-body: 'Epilogue', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+  --font-display: -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-body: -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
   
   /* ── 字号 ── */
-  --text-xs: 0.75rem;     /* 12px */
-  --text-sm: 0.8125rem;   /* 13px */
-  --text-base: 0.875rem;  /* 14px */
-  --text-lg: 1rem;        /* 16px */
-  --text-xl: 1.125rem;    /* 18px */
-  --text-2xl: 1.5rem;     /* 24px */
-  --text-3xl: 2rem;       /* 32px */
-  --text-4xl: 2.5rem;     /* 40px */
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-base: 14px;
+  --text-lg: 16px;
+  --text-xl: 18px;
+  --text-2xl: 22px;
+  --text-3xl: 28px;
+  --text-4xl: 36px;
   
   /* ── 字重 ── */
   --weight-regular: 400;
@@ -69,10 +67,11 @@
   --weight-bold: 700;
   
   /* ── 圆角 ── */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
   --radius-full: 9999px;
   
   /* ── 间距 ── */
@@ -83,19 +82,9 @@
   --space-5: 20px;
   --space-6: 24px;
   --space-8: 32px;
-  --space-10: 40px;
   
   /* ── 阴影 ── */
-  --shadow-sm: 0 2px 8px rgba(96, 108, 56, 0.08);
-  --shadow-md: 0 4px 16px rgba(96, 108, 56, 0.1);
-  --shadow-lg: 0 8px 32px rgba(96, 108, 56, 0.12);
-  --shadow-xl: 0 16px 48px rgba(96, 108, 56, 0.15);
-  
-  /* ── 过渡 ── */
-  --transition-fast: 150ms ease;
-  --transition-normal: 300ms ease;
-  --transition-slow: 500ms ease;
-  
-  /* ── 有机纹理 ── */
-  --organic-noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.1);
 }

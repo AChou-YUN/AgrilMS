@@ -149,6 +149,6 @@ onUnmounted(() => {
 <style scoped>
 .stat-card { text-align: center; }
 .stat-label { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 8px; }
-.stat-value { font-size: var(--text-2xl); font-weight: var(--weight-bold); color: var(--text-primary); font-family: var(--font-display); font-variant-numeric: tabular-nums; }
+.stat-value { font-size: var(--text-2xl); font-weight: var(--weight-bold); color: var(--text-primary); font-variant-numeric: tabular-nums; }
 .warning-text { color: var(--color-warning) !important; font-weight: var(--weight-semibold); }
 </style>
