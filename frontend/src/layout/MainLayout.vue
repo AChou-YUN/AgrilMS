@@ -214,7 +214,8 @@ function handleCommand(command) {
   border-radius: var(--radius-sm);
   font-size: 14px;
   font-weight: var(--weight-regular);
-  transition: all var(--duration-fast) var(--ease-smooth);
+  transition: background-color var(--duration-fast) var(--ease-smooth),
+              color var(--duration-fast) var(--ease-smooth);
   position: relative;
 }
 
@@ -230,7 +231,8 @@ function handleCommand(command) {
   margin: 2px 0 !important;
   border-radius: var(--radius-sm);
   position: relative;
-  transition: all var(--duration-fast) var(--ease-smooth);
+  transition: background-color var(--duration-fast) var(--ease-smooth),
+              color var(--duration-fast) var(--ease-smooth);
 }
 
 /* 图标统一样式 */
@@ -424,5 +426,32 @@ function handleCommand(command) {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+</style>
+
+<!-- 非 scoped：覆盖 Element Plus 内部折叠动画，解决侧边栏折叠卡顿 -->
+<style>
+/* 禁用 Element Plus 的水平折叠宽度动画，让 el-aside 的 width transition 成为唯一驱动源 */
+.horizontal-collapse-transition {
+  transition: none !important;
+}
+
+/* 菜单项只过渡颜色，禁用布局属性过渡（padding/width/height），避免重排卡顿 */
+.el-menu-item,
+.el-sub-menu__title {
+  transition: background-color 0.15s ease-in-out,
+              color 0.15s ease-in-out !important;
+}
+
+/* 折叠态下菜单项内部 span 立即隐藏 */
+.el-menu--collapse > .el-menu-item > span,
+.el-menu--collapse > .el-sub-menu > .el-sub-menu__title > span {
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  display: inline-block !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 </style>
