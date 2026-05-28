@@ -1,49 +1,37 @@
 <template>
   <div class="page-container">
     <!-- 汇总卡片 -->
-    <el-row :gutter="16" style="margin-bottom:16px;">
-      <el-col :xs="12" :sm="6">
-        <el-card shadow="hover" class="stat-card">
-          <div class="stat-label">总产品数</div>
-          <div class="stat-value">{{ summary.totalProducts || 0 }}</div>
-        </el-card>
-      </el-col>
-      <el-col :xs="12" :sm="6">
-        <el-card shadow="hover" class="stat-card">
-          <div class="stat-label">总库存量</div>
-          <div class="stat-value">{{ summary.totalStock || 0 }}</div>
-        </el-card>
-      </el-col>
-      <el-col :xs="12" :sm="6">
-        <el-card shadow="hover" class="stat-card">
-          <div class="stat-label">库存总价值</div>
-          <div class="stat-value">¥{{ formatNumber(summary.totalValue) }}</div>
-        </el-card>
-      </el-col>
-      <el-col :xs="12" :sm="6">
-        <el-card shadow="hover" class="stat-card">
-          <div class="stat-label">预警产品数</div>
-          <div class="stat-value warning-text">{{ summary.warningCount || 0 }}</div>
-        </el-card>
-      </el-col>
-    </el-row>
+    <div class="stat-cards-row">
+      <el-card shadow="never" class="stat-card">
+        <div class="stat-label">总产品数</div>
+        <div class="stat-value">{{ summary.totalProducts || 0 }}</div>
+      </el-card>
+      <el-card shadow="never" class="stat-card">
+        <div class="stat-label">总库存量</div>
+        <div class="stat-value">{{ summary.totalStock || 0 }}</div>
+      </el-card>
+      <el-card shadow="never" class="stat-card">
+        <div class="stat-label">库存总价值</div>
+        <div class="stat-value">¥{{ formatNumber(summary.totalValue) }}</div>
+      </el-card>
+      <el-card shadow="never" class="stat-card">
+        <div class="stat-label">预警产品数</div>
+        <div class="stat-value warning-text">{{ summary.warningCount || 0 }}</div>
+      </el-card>
+    </div>
 
     <!-- 库存分布饼图 -->
-    <el-row :gutter="16" style="margin-bottom:16px;">
-      <el-col :span="24">
-        <el-card shadow="hover">
-          <template #header><span>各分类库存占比</span></template>
-          <div ref="pieChartRef" style="width:100%;height:350px;"></div>
-        </el-card>
-      </el-col>
-    </el-row>
+    <el-card shadow="never" style="margin-bottom:0;">
+      <template #header><span>各分类库存占比</span></template>
+      <div ref="pieChartRef" style="width:100%;height:350px;"></div>
+    </el-card>
 
     <!-- 库存明细表 -->
     <div class="table-card">
       <div class="table-toolbar">
         <span>库存明细</span>
       </div>
-      <el-table :data="inventoryList" v-loading="loading" stripe :row-class-name="tableRowClassName">
+      <el-table :data="inventoryList" v-loading="loading" :row-class-name="tableRowClassName">
         <el-table-column prop="productName" label="产品名称" min-width="140" />
         <el-table-column prop="categoryName" label="分类" width="100" />
         <el-table-column prop="currentStock" label="当前库存" width="100">
@@ -147,6 +135,14 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.stat-cards-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+@media (max-width: 768px) {
+  .stat-cards-row { grid-template-columns: repeat(2, 1fr); }
+}
 .stat-card { text-align: center; }
 .stat-label { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 8px; }
 .stat-value { font-size: var(--text-2xl); font-weight: var(--weight-bold); color: var(--text-primary); font-variant-numeric: tabular-nums; }

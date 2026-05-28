@@ -1,55 +1,63 @@
 /* ============================================
-   Design Tokens - 经典管理系统风格
+   Design Tokens - 极简管理系统风格
    ============================================ */
 
 :root {
-  /* ── 色彩体系（经典蓝灰色系） ── */
-  --color-primary: #4B6EAF;
-  --color-primary-light: #6B8EC5;
-  --color-primary-dark: #3A5A95;
-  --color-primary-bg: #EBF0F7;
-  
-  --color-success: #529B5A;
-  --color-success-light: #E8F5E9;
-  --color-warning: #C68A2E;
-  --color-warning-light: #FFF8E1;
-  --color-danger: #C44040;
-  --color-danger-light: #FDECEA;
-  --color-info: #78909C;
-  --color-info-light: #ECEFF1;
-  
+  /* ── 色彩体系（现代紫蓝色系） ── */
+  --color-primary: #4F6EF7;
+  --color-primary-light: #7B93FA;
+  --color-primary-dark: #3A56D9;
+  --color-primary-bg: #EEF1FE;
+  --color-primary-soft: rgba(79, 110, 247, 0.08);
+
+  --color-success: #34C759;
+  --color-success-light: #EDFCF0;
+  --color-success-soft: rgba(52, 199, 89, 0.08);
+  --color-warning: #F5A623;
+  --color-warning-light: #FFF8EC;
+  --color-warning-soft: rgba(245, 166, 35, 0.08);
+  --color-danger: #FF3B30;
+  --color-danger-light: #FFF0EF;
+  --color-danger-soft: rgba(255, 59, 48, 0.08);
+  --color-info: #8E8E93;
+  --color-info-light: #F5F5F7;
+  --color-info-soft: rgba(142, 142, 147, 0.08);
+
   /* ── 表面色 ── */
-  --surface-bg: #F0F2F5;
+  --surface-bg: #F5F6FA;
   --surface-card: #FFFFFF;
-  --surface-hover: #F5F7FA;
-  --surface-active: #EBF0F7;
-  
+  --surface-hover: #F8F9FC;
+  --surface-active: #EEF1FE;
+  --surface-elevated: #FFFFFF;
+
   /* ── 文字色 ── */
-  --text-primary: #1F2D3D;
-  --text-regular: #3E4C59;
-  --text-secondary: #697B8C;
-  --text-muted: #9DAAB6;
-  --text-placeholder: #B0BEC5;
+  --text-primary: #1A1D26;
+  --text-regular: #3B3F4A;
+  --text-secondary: #6B7080;
+  --text-muted: #9CA3B0;
+  --text-placeholder: #C1C6D0;
   --text-on-primary: #FFFFFF;
-  
+
   /* ── 边框色 ── */
-  --border-light: #E4E8ED;
-  --border-base: #D4DAE0;
-  --border-dark: #B8C0CC;
-  
-  /* ── 侧边栏 ── */
-  --sidebar-bg: #1D2B3D;
-  --sidebar-hover: rgba(255,255,255,0.08);
-  --sidebar-active: rgba(75,110,175,0.35);
-  --sidebar-text: rgba(255,255,255,0.65);
-  --sidebar-text-active: #FFFFFF;
-  --sidebar-header-bg: #152232;
-  
+  --border-light: #ECEEF3;
+  --border-base: #DFE2EA;
+  --border-dark: #C5CAD5;
+
+  /* ── 侧边栏（现代浅色方案） ── */
+  --sidebar-bg: #FFFFFF;
+  --sidebar-hover: #F5F6FA;
+  --sidebar-active: var(--color-primary-soft);
+  --sidebar-text: #6B7080;
+  --sidebar-text-active: var(--color-primary);
+  --sidebar-header-bg: #FFFFFF;
+  --sidebar-border: #ECEEF3;
+  --sidebar-indicator: var(--color-primary);
+
   /* ── 字体 ── */
   --font-display: -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-body: -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
-  
+
   /* ── 字号 ── */
   --text-xs: 12px;
   --text-sm: 13px;
@@ -59,21 +67,21 @@
   --text-2xl: 22px;
   --text-3xl: 28px;
   --text-4xl: 36px;
-  
+
   /* ── 字重 ── */
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
-  
+
   /* ── 圆角 ── */
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
   --radius-full: 9999px;
-  
+
   /* ── 间距 ── */
   --space-1: 4px;
   --space-2: 8px;
@@ -82,9 +90,25 @@
   --space-5: 20px;
   --space-6: 24px;
   --space-8: 32px;
-  
+  --space-10: 40px;
+  --space-12: 48px;
+
   /* ── 阴影 ── */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-  --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
-  --shadow-lg: 0 4px 16px rgba(0,0,0,0.1);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-float: 0 8px 30px rgba(79, 110, 247, 0.12);
+
+  /* ── 动画曲线 ── */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 0.15s;
+  --duration-normal: 0.25s;
+  --duration-slow: 0.4s;
+
+  /* ── 行高 ── */
+  --table-row-height: 56px;
 }

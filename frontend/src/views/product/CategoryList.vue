@@ -5,7 +5,7 @@
         <span>农资分类</span>
         <el-button type="primary" @click="showDialog()">新增分类</el-button>
       </div>
-      <el-table :data="list" v-loading="loading" stripe>
+      <el-table :data="list" v-loading="loading">
         <el-table-column prop="id" label="ID" min-width="60" />
         <el-table-column prop="name" label="分类名称" min-width="150" />
         <el-table-column prop="description" label="描述" min-width="200" />

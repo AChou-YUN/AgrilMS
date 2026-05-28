@@ -27,7 +27,7 @@
         <el-button type="primary" @click="showAddDialog">新增用户</el-button>
       </div>
 
-      <el-table :data="userList" v-loading="loading" stripe>
+      <el-table :data="userList" v-loading="loading">
         <el-table-column prop="username" label="用户名" min-width="120" />
         <el-table-column prop="realName" label="真实姓名" min-width="100" />
         <el-table-column prop="phone" label="手机号" min-width="130" />

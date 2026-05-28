@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <el-card shadow="hover">
+    <el-card shadow="never">
       <template #header><span>新增进货单</span></template>
       <el-form ref="formRef" :model="form" :rules="rules" label-width="90px">
         <el-row :gutter="16">

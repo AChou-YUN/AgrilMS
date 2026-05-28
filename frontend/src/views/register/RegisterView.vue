@@ -85,28 +85,43 @@ async function handleRegister() {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #1D2B3D 0%, #2C4A6E 50%, #4B6EAF 100%);
+  background: linear-gradient(135deg, #4F6EF7 0%, #7B93FA 50%, #A3B5FB 100%);
+  position: relative;
+}
+.register-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
 }
 .register-card {
   width: 420px;
-  padding: 36px 40px;
+  padding: 40px 44px;
   background: #fff;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
   max-height: 90vh;
   overflow-y: auto;
+  position: relative;
+  z-index: 2;
 }
-.register-header { text-align: center; margin-bottom: 24px; }
+.register-header { text-align: center; margin-bottom: 28px; }
 .logo-area {
-  width: 56px; height: 56px; margin: 0 auto 12px;
-  background: var(--color-primary);
-  border-radius: 12px;
+  width: 56px; height: 56px; margin: 0 auto 16px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  border-radius: var(--radius-md);
   display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 24px rgba(79, 110, 247, 0.3);
 }
-.register-title { font-size: 20px; font-weight: 700; color: var(--text-primary); margin: 0 0 4px; }
-.register-subtitle { font-size: 12px; color: var(--text-muted); margin: 0; }
-.register-btn { width: 100%; height: 42px; font-size: 15px; letter-spacing: 2px; }
-.register-footer { text-align: center; margin-top: 12px; font-size: 13px; color: var(--text-secondary); }
-.register-footer a { color: var(--color-primary); margin-left: 4px; }
-.register-footer a:hover { color: var(--color-primary-light); }
+.register-title { font-size: 22px; font-weight: var(--weight-bold); color: var(--text-primary); margin: 0 0 6px; letter-spacing: -0.01em; }
+.register-subtitle { font-size: 13px; color: var(--text-muted); margin: 0; }
+.register-btn { width: 100%; height: 44px; font-size: 15px; font-weight: var(--weight-semibold); letter-spacing: 1px; margin-top: 4px; }
+.register-footer { text-align: center; margin-top: 16px; font-size: 14px; color: var(--text-secondary); }
+.register-footer a { color: var(--color-primary); margin-left: 4px; font-weight: var(--weight-medium); }
+.register-footer a:hover { color: var(--color-primary-dark); }
 </style>

@@ -5,7 +5,7 @@
         <span>计量单位</span>
         <el-button type="primary" @click="showDialog()">新增单位</el-button>
       </div>
-      <el-table :data="list" v-loading="loading" stripe max-width="600">
+      <el-table :data="list" v-loading="loading" max-width="600">
         <el-table-column prop="id" label="ID" min-width="80" />
         <el-table-column prop="name" label="单位名称" min-width="200" />
         <el-table-column prop="abbreviation" label="缩写" min-width="150" />

@@ -34,7 +34,7 @@
         <span>销售单列表</span>
         <el-button type="primary" @click="$router.push('/sales-orders/add')">销售开单</el-button>
       </div>
-      <el-table :data="list" v-loading="loading" stripe>
+      <el-table :data="list" v-loading="loading">
         <el-table-column prop="orderNo" label="销售单号" min-width="140" />
         <el-table-column prop="customerName" label="客户" min-width="100" />
         <el-table-column prop="totalAmount" label="总金额" min-width="100">

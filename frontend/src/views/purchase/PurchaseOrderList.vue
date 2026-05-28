@@ -26,7 +26,7 @@
         <span>进货单列表</span>
         <el-button type="primary" @click="$router.push('/purchase-orders/add')">新增进货单</el-button>
       </div>
-      <el-table :data="list" v-loading="loading" stripe>
+      <el-table :data="list" v-loading="loading">
         <el-table-column prop="orderNo" label="进货单号" min-width="140" />
         <el-table-column prop="supplierName" label="供应商" min-width="120" />
         <el-table-column prop="totalAmount" label="总金额" min-width="100">

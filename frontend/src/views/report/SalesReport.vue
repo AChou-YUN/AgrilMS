@@ -21,20 +21,16 @@
       </el-form>
     </div>
 
-    <el-row :gutter="16" style="margin-bottom:16px;">
-      <el-col :span="24">
-        <el-card shadow="hover">
-          <template #header><span>销售趋势</span></template>
-          <div ref="chartRef" style="width:100%;height:350px;"></div>
-        </el-card>
-      </el-col>
-    </el-row>
+    <el-card shadow="never" style="margin-bottom:0;">
+      <template #header><span>销售趋势</span></template>
+      <div ref="chartRef" style="width:100%;height:350px;"></div>
+    </el-card>
 
     <div class="table-card">
       <div class="table-toolbar">
         <span>销售数据明细</span>
       </div>
-      <el-table :data="dataList" v-loading="loading" stripe>
+      <el-table :data="dataList" v-loading="loading">
         <el-table-column prop="date" label="时间" min-width="120" />
         <el-table-column prop="count" label="订单数" width="100" />
         <el-table-column prop="amount" label="销售额" width="120">

@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <el-card shadow="hover">
+    <el-card shadow="never">
       <template #header>
         <div class="card-header-flex">
           <span>进货单详情</span>
@@ -19,7 +19,7 @@
         <el-descriptions-item label="备注" :span="3">{{ detail.remark || '无' }}</el-descriptions-item>
       </el-descriptions>
       <el-divider content-position="left">进货明细</el-divider>
-      <el-table :data="detail.items || []" border size="small">
+      <el-table :data="detail.items || []" size="default">
         <el-table-column prop="productName" label="产品名称" min-width="150" />
         <el-table-column prop="specification" label="规格" width="100" />
         <el-table-column prop="unitName" label="单位" width="60" />

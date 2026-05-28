@@ -2,7 +2,9 @@
   <el-container class="layout-container">
     <el-aside :width="isCollapse ? '64px' : '220px'" class="layout-aside">
       <div class="aside-header">
-        <el-icon :size="20" color="#fff"><Management /></el-icon>
+        <div class="logo-icon">
+          <el-icon :size="18" color="#fff"><Management /></el-icon>
+        </div>
         <transition name="fade">
           <span v-show="!isCollapse" class="logo-text">农资管理系统</span>
         </transition>
@@ -76,7 +78,7 @@
         <div class="header-right">
           <el-dropdown trigger="click" @command="handleCommand">
             <span class="user-dropdown">
-              <el-avatar :size="30" class="user-avatar">{{ userStore.realName ? userStore.realName[0] : 'U' }}</el-avatar>
+              <el-avatar :size="32" class="user-avatar">{{ userStore.realName ? userStore.realName[0] : 'U' }}</el-avatar>
               <span class="user-name">{{ userStore.realName || userStore.username }}</span>
               <el-icon class="el-icon--right"><ArrowDown /></el-icon>
             </span>
@@ -91,7 +93,7 @@
       </el-header>
       <el-main class="layout-content">
         <router-view v-slot="{ Component }">
-          <transition name="fade" mode="out-in">
+          <transition name="fade-slide" mode="out-in">
             <component :is="Component" />
           </transition>
         </router-view>
@@ -141,32 +143,47 @@ function handleCommand(command) {
   overflow: hidden;
 }
 
+/* ===== 侧边栏 ===== */
 .layout-aside {
   background-color: var(--sidebar-bg);
-  transition: width 0.3s ease;
+  border-right: 1px solid var(--sidebar-border);
+  transition: width 0.3s var(--ease-spring);
   overflow: hidden;
 }
 
 .aside-header {
-  height: 50px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   padding: 0 16px;
-  background-color: var(--sidebar-header-bg);
+  border-bottom: 1px solid var(--sidebar-border);
   overflow: hidden;
 }
 
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(79, 110, 247, 0.3);
+}
+
 .logo-text {
-  color: #fff;
+  color: var(--text-primary);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: var(--weight-bold);
   white-space: nowrap;
+  letter-spacing: -0.01em;
 }
 
 .aside-scroll {
-  height: calc(100vh - 50px);
+  height: calc(100vh - 56px);
 }
 
 .aside-menu {
@@ -177,26 +194,28 @@ function handleCommand(command) {
   width: 220px;
 }
 
-/* 侧边栏菜单样式 */
+/* ===== 侧边栏菜单样式 ===== */
 .aside-menu {
   --el-menu-bg-color: transparent;
   --el-menu-text-color: var(--sidebar-text);
   --el-menu-active-color: var(--sidebar-text-active);
-  --el-menu-hover-bg-color: var(--sidebar-hover);
+  --el-menu-hover-bg-color: transparent;
   --el-menu-item-height: 42px;
   --el-menu-sub-menu-title-height: 42px;
+  padding: 8px;
 }
-
-/* ===== Element Plus 内部样式穿透 ===== */
 
 /* 一级菜单项 */
 :deep(.aside-menu) .el-menu-item {
-  padding-left: 20px !important;
-  height: 42px !important;
-  line-height: 42px !important;
-  margin: 2px 8px !important;
-  border-radius: 4px;
+  padding-left: 16px !important;
+  height: 40px !important;
+  line-height: 40px !important;
+  margin: 2px 0 !important;
+  border-radius: var(--radius-sm);
   font-size: 14px;
+  font-weight: var(--weight-regular);
+  transition: all var(--duration-fast) var(--ease-smooth);
+  position: relative;
 }
 
 /* 二级菜单标题 */
@@ -204,21 +223,22 @@ function handleCommand(command) {
   display: flex !important;
   justify-content: flex-start !important;
   align-items: center;
-  padding-left: 20px !important;
+  padding-left: 16px !important;
   padding-right: 36px !important;
-  height: 42px !important;
-  line-height: 42px !important;
-  margin: 2px 8px !important;
-  border-radius: 4px;
+  height: 40px !important;
+  line-height: 40px !important;
+  margin: 2px 0 !important;
+  border-radius: var(--radius-sm);
   position: relative;
+  transition: all var(--duration-fast) var(--ease-smooth);
 }
 
 /* 图标统一样式 */
 :deep(.aside-menu) .el-menu-item .el-icon,
 :deep(.aside-menu) .el-sub-menu__title .el-icon {
-  margin-right: 8px;
-  font-size: 16px;
-  width: 16px;
+  margin-right: 10px;
+  font-size: 17px;
+  width: 17px;
   flex-shrink: 0;
 }
 
@@ -235,7 +255,10 @@ function handleCommand(command) {
 
 /* 子菜单子项缩进 */
 :deep(.aside-menu) .el-sub-menu .el-menu-item {
-  padding-left: 50px !important;
+  padding-left: 46px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  font-size: 13px;
 }
 
 /* hover 状态 */
@@ -245,11 +268,23 @@ function handleCommand(command) {
   color: var(--sidebar-text-active) !important;
 }
 
-/* active 状态 */
+/* active 状态 - 使用左侧指示条 */
 :deep(.aside-menu) .el-menu-item.is-active {
   background: var(--sidebar-active) !important;
   color: var(--sidebar-text-active) !important;
-  font-weight: 500;
+  font-weight: var(--weight-semibold);
+}
+
+:deep(.aside-menu) .el-menu-item.is-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 18px;
+  background: var(--sidebar-indicator);
+  border-radius: 0 2px 2px 0;
 }
 
 /* ===== 折叠状态 ===== */
@@ -258,7 +293,7 @@ function handleCommand(command) {
   justify-content: center !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
-  margin: 2px 6px !important;
+  margin: 2px 0 !important;
 }
 
 :deep(.el-menu--collapse) .aside-menu .el-menu-item .el-icon,
@@ -271,6 +306,11 @@ function handleCommand(command) {
   display: none;
 }
 
+:deep(.el-menu--collapse) .aside-menu .el-menu-item.is-active::before {
+  left: 0;
+}
+
+/* ===== 主内容区 ===== */
 .layout-main {
   flex: 1;
   overflow: hidden;
@@ -278,31 +318,34 @@ function handleCommand(command) {
 }
 
 .layout-header {
-  height: 50px;
+  height: 56px;
   background: var(--surface-card);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  box-shadow: var(--shadow-sm);
+  padding: 0 24px;
   z-index: 10;
   border-bottom: 1px solid var(--border-light);
+  box-shadow: none;
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .collapse-btn {
   cursor: pointer;
-  color: var(--text-secondary);
-  transition: color 0.2s;
+  color: var(--text-muted);
+  transition: color var(--duration-fast) var(--ease-smooth);
+  border-radius: var(--radius-xs);
+  padding: 4px;
 }
 
 .collapse-btn:hover {
   color: var(--color-primary);
+  background: var(--color-primary-soft);
 }
 
 .breadcrumb {
@@ -318,25 +361,28 @@ function handleCommand(command) {
   display: flex;
   align-items: center;
   cursor: pointer;
-  gap: 6px;
+  gap: 8px;
   color: var(--text-regular);
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-fast) var(--ease-smooth);
 }
 
 .user-dropdown:hover {
   color: var(--color-primary);
+  background: var(--color-primary-soft);
 }
 
 .user-avatar {
-  background: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
   color: #fff;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: var(--weight-bold);
 }
 
 .user-name {
   font-size: 14px;
+  font-weight: var(--weight-medium);
   max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -344,14 +390,35 @@ function handleCommand(command) {
 }
 
 .layout-content {
-  padding: 16px;
+  padding: 0;
   overflow-y: auto;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 56px);
+  background: var(--surface-bg);
 }
 
+/* ===== 页面过渡动画 ===== */
+.fade-slide-enter-active {
+  transition: all 0.35s var(--ease-spring);
+}
+
+.fade-slide-leave-active {
+  transition: all 0.2s var(--ease-smooth);
+}
+
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* ===== 普通 fade 动画 ===== */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s var(--ease-smooth);
 }
 
 .fade-enter-from,

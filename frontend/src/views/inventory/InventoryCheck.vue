@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <el-card shadow="hover">
+    <el-card shadow="never">
       <template #header><span>库存盘点</span></template>
       <el-form ref="formRef" :model="form" :rules="rules" label-width="100px" style="max-width: 600px;">
         <el-form-item label="选择产品" prop="productId">

@@ -21,7 +21,7 @@
         <span>供应商列表</span>
         <el-button type="primary" @click="showDialog()">新增供应商</el-button>
       </div>
-      <el-table :data="list" v-loading="loading" stripe>
+      <el-table :data="list" v-loading="loading">
         <el-table-column prop="name" label="供应商名称" min-width="140" />
         <el-table-column prop="contactPerson" label="联系人" min-width="100" />
         <el-table-column prop="phone" label="联系电话" min-width="120" />

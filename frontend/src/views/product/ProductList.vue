@@ -27,7 +27,7 @@
         <span>农资产品列表</span>
         <el-button type="primary" @click="$router.push('/products/add')">新增产品</el-button>
       </div>
-      <el-table :data="productList" v-loading="loading" stripe>
+      <el-table :data="productList" v-loading="loading">
         <el-table-column prop="name" label="产品名称" min-width="120" />
         <el-table-column prop="categoryName" label="分类" min-width="100" />
         <el-table-column prop="specification" label="规格" min-width="100" />

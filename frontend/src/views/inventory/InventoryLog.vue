@@ -34,7 +34,7 @@
       <div class="table-toolbar">
         <span>库存变动日志</span>
       </div>
-      <el-table :data="list" v-loading="loading" stripe>
+      <el-table :data="list" v-loading="loading">
         <el-table-column prop="productName" label="产品名称" min-width="140" />
         <el-table-column label="变动类型" min-width="100">
           <template #default="{ row }">

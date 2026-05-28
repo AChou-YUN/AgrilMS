@@ -19,7 +19,7 @@
         <span>客户列表</span>
         <el-button type="primary" @click="showDialog()">新增客户</el-button>
       </div>
-      <el-table :data="list" v-loading="loading" stripe>
+      <el-table :data="list" v-loading="loading">
         <el-table-column prop="name" label="姓名" min-width="100" />
         <el-table-column prop="phone" label="手机号" min-width="120" />
         <el-table-column prop="address" label="地址" min-width="180" />

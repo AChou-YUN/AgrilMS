@@ -21,7 +21,7 @@
         <span>库存预警产品</span>
         <el-tag type="danger" size="small">共 {{ list.length }} 件产品需要补货</el-tag>
       </div>
-      <el-table :data="list" v-loading="loading" stripe row-class-name="warning-row">
+      <el-table :data="list" v-loading="loading" row-class-name="warning-row">
         <el-table-column prop="productName" label="产品名称" min-width="140" />
         <el-table-column prop="categoryName" label="分类" min-width="100" />
         <el-table-column prop="specification" label="规格" min-width="100" />

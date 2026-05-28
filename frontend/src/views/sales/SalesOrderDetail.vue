@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <el-card shadow="hover">
+    <el-card shadow="never">
       <template #header>
         <div class="card-header-flex">
           <span>销售单详情</span>
@@ -21,7 +21,7 @@
       </el-descriptions>
 
       <el-divider content-position="left">销售明细</el-divider>
-      <el-table :data="detail.items || []" border size="small">
+      <el-table :data="detail.items || []" size="default">
         <el-table-column prop="productName" label="产品名称" min-width="150" />
         <el-table-column prop="specification" label="规格" width="100" />
         <el-table-column prop="unitName" label="单位" width="60" />

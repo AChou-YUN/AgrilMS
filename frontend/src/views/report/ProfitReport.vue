@@ -18,35 +18,27 @@
     </div>
 
     <!-- 汇总卡片 -->
-    <el-row :gutter="16" style="margin-bottom:16px;">
-      <el-col :xs="12" :sm="6">
-        <el-card shadow="hover" class="stat-card">
-          <div class="stat-label">总销售额</div>
-          <div class="stat-value sales-text">¥{{ formatNumber(totalSales) }}</div>
-        </el-card>
-      </el-col>
-      <el-col :xs="12" :sm="6">
-        <el-card shadow="hover" class="stat-card">
-          <div class="stat-label">总进货成本</div>
-          <div class="stat-value purchase-text">¥{{ formatNumber(totalPurchase) }}</div>
-        </el-card>
-      </el-col>
-      <el-col :xs="12" :sm="6">
-        <el-card shadow="hover" class="stat-card">
-          <div class="stat-label">毛利润</div>
-          <div class="stat-value" :class="totalProfit >= 0 ? 'profit-text' : 'loss-text'">¥{{ formatNumber(totalProfit) }}</div>
-        </el-card>
-      </el-col>
-      <el-col :xs="12" :sm="6">
-        <el-card shadow="hover" class="stat-card">
-          <div class="stat-label">利润率</div>
-          <div class="stat-value" :class="profitRate >= 0 ? 'profit-text' : 'loss-text'">{{ profitRate.toFixed(1) }}%</div>
-        </el-card>
-      </el-col>
-    </el-row>
+    <div class="stat-cards-row">
+      <el-card shadow="never" class="stat-card">
+        <div class="stat-label">总销售额</div>
+        <div class="stat-value sales-text">¥{{ formatNumber(totalSales) }}</div>
+      </el-card>
+      <el-card shadow="never" class="stat-card">
+        <div class="stat-label">总进货成本</div>
+        <div class="stat-value purchase-text">¥{{ formatNumber(totalPurchase) }}</div>
+      </el-card>
+      <el-card shadow="never" class="stat-card">
+        <div class="stat-label">毛利润</div>
+        <div class="stat-value" :class="totalProfit >= 0 ? 'profit-text' : 'loss-text'">¥{{ formatNumber(totalProfit) }}</div>
+      </el-card>
+      <el-card shadow="never" class="stat-card">
+        <div class="stat-label">利润率</div>
+        <div class="stat-value" :class="profitRate >= 0 ? 'profit-text' : 'loss-text'">{{ profitRate.toFixed(1) }}%</div>
+      </el-card>
+    </div>
 
     <!-- 利润趋势图 -->
-    <el-card shadow="hover" style="margin-bottom:16px;">
+    <el-card shadow="never" style="margin-bottom:16px;">
       <template #header><span>利润趋势</span></template>
       <div ref="chartRef" style="width:100%;height:350px;"></div>
     </el-card>
@@ -56,7 +48,7 @@
       <div class="table-toolbar">
         <span>利润数据明细</span>
       </div>
-      <el-table :data="dataList" v-loading="loading" stripe>
+      <el-table :data="dataList" v-loading="loading">
         <el-table-column prop="period" label="时间" min-width="120" />
         <el-table-column prop="salesAmount" label="销售额" width="120">
           <template #default="{ row }">¥{{ Number(row.salesAmount || 0).toFixed(2) }}</template>
@@ -193,6 +185,14 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.stat-cards-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+@media (max-width: 768px) {
+  .stat-cards-row { grid-template-columns: repeat(2, 1fr); }
+}
 .stat-card { text-align: center; }
 .stat-label { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 8px; }
 .stat-value { font-size: var(--text-2xl); font-weight: var(--weight-bold); font-variant-numeric: tabular-nums; }

@@ -23,7 +23,7 @@
       <div class="table-toolbar">
         <span>库存列表</span>
       </div>
-      <el-table :data="list" v-loading="loading" stripe :row-class-name="tableRowClassName">
+      <el-table :data="list" v-loading="loading" :row-class-name="tableRowClassName">
         <el-table-column prop="productName" label="产品名称" min-width="120" />
         <el-table-column prop="categoryName" label="分类" min-width="100" />
         <el-table-column prop="specification" label="规格" min-width="100" />
