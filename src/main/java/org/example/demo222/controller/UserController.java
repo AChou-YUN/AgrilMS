@@ -14,8 +14,13 @@ import org.example.demo222.dto.response.UserVO;
 import org.example.demo222.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import org.example.demo222.dto.response.RoleVO;
+import org.example.demo222.entity.SysRole;
+import org.example.demo222.mapper.SysRoleMapper;
+
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Tag(name = "用户管理", description = "系统用户管理（需管理员权限）")
 @RestController
@@ -25,9 +30,26 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final SysRoleMapper roleMapper;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, SysRoleMapper roleMapper) {
         this.userService = userService;
+        this.roleMapper = roleMapper;
+    }
+
+    @Operation(summary = "获取所有角色", description = "获取系统中所有可用角色列表，用于新增用户时选择角色")
+    @GetMapping("/roles")
+    public Result<List<RoleVO>> getAllRoles() {
+        List<SysRole> roles = roleMapper.selectAll();
+        List<RoleVO> roleVOs = roles.stream().map(role -> {
+            RoleVO vo = new RoleVO();
+            vo.setId(role.getId());
+            vo.setRoleName(role.getRoleName());
+            vo.setRoleKey(role.getRoleKey());
+            vo.setDescription(role.getDescription());
+            return vo;
+        }).collect(Collectors.toList());
+        return Result.success(roleVOs);
     }
 
     @Operation(summary = "用户列表", description = "分页查询用户列表，支持按用户名、姓名、状态、角色搜索")

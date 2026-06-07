@@ -111,7 +111,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { getUserList, createUser, updateUser, deleteUser, updateUserStatus, assignRoles } from '@/api/user'
+import { getUserList, createUser, updateUser, deleteUser, updateUserStatus, assignRoles, getAllRoles } from '@/api/user'
 import dayjs from 'dayjs'
 
 const loading = ref(false)
@@ -200,7 +200,14 @@ async function handleDelete(id) {
   } catch (e) { /* handled */ }
 }
 
-onMounted(() => { loadUsers() })
+async function loadRoles() {
+  try {
+    const res = await getAllRoles()
+    roleOptions.value = res.data || []
+  } catch (e) { /* handled */ }
+}
+
+onMounted(() => { loadUsers(); loadRoles() })
 </script>
 
 <style scoped>

@@ -1,6 +1,13 @@
 import request from './request'
 
 /**
+ * 获取所有角色列表
+ */
+export function getAllRoles() {
+  return request.get('/users/roles')
+}
+
+/**
  * 分页查询用户列表
  */
 export function getUserList(params) {

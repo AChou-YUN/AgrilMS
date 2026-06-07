@@ -13,7 +13,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="进货日期" prop="orderDate">
-              <el-date-picker v-model="form.orderDate" type="date" value-format="YYYY-MM-DD" placeholder="选择日期" style="width:100%;" />
+              <el-date-picker v-model="form.orderDate" type="date" value-format="YYYY-MM-DD" placeholder="选择日期" :disabled-date="disableFutureDate" style="width:100%;" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -98,6 +98,10 @@ async function loadOptions() {
     suppliers.value = sr.data || []
     products.value = pr.data?.list || []
   } catch (e) { /* handled */ }
+}
+
+function disableFutureDate(date) {
+  return date.getTime() > Date.now()
 }
 
 async function handleSubmit() {

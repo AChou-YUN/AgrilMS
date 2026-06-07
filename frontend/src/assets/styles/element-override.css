@@ -215,6 +215,7 @@
 
 .el-pagination .is-active {
   background-color: var(--color-primary) !important;
+  color: #fff !important;
   border-radius: var(--radius-sm);
 }
 
