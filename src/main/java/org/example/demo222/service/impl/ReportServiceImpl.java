@@ -156,6 +156,6 @@ public class ReportServiceImpl implements ReportService {
             endDate = today;
         }
 
-        return salesOrderMapper.selectProductRanking(startDate, endDate, 20);
+        return salesOrderMapper.selectCustomerRanking(startDate, endDate, 20);
     }
 }

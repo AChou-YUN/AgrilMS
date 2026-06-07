@@ -74,6 +74,13 @@ public interface SalesOrderMapper {
                                                @Param("limit") int limit);
 
     /**
+     * 客户消费排行
+     */
+    List<SalesRankingVO> selectCustomerRanking(@Param("startDate") LocalDate startDate,
+                                                @Param("endDate") LocalDate endDate,
+                                                @Param("limit") int limit);
+
+    /**
      * 统计指定日期的销售总额和笔数
      */
     SalesStatItem selectSummaryByDate(@Param("date") LocalDate date);

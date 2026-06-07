@@ -48,9 +48,11 @@
         </el-table-column>
         <el-table-column prop="orderDate" label="销售日期" min-width="110" />
         <el-table-column prop="operatorName" label="操作人" min-width="90" />
-        <el-table-column label="操作" width="150" fixed="right">
+        <el-table-column label="操作" width="220" fixed="right">
           <template #default="{ row }">
             <el-button type="primary" text size="small" @click="$router.push('/sales-orders/' + row.id)">详情</el-button>
+            <el-button type="warning" text size="small" @click="quickReturn(row)" v-if="row.status === 1 || row.status === 3">退货</el-button>
+            <el-button type="success" text size="small" @click="quickPrint(row)" v-if="row.status === 1">打印</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -63,8 +65,11 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { getSalesOrderList } from '@/api/sales'
+import { useRouter } from 'vue-router'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { getSalesOrderList, processReturn } from '@/api/sales'
 
+const router = useRouter()
 const loading = ref(false); const list = ref([]); const total = ref(0); const dateRange = ref(null)
 const query = reactive({ orderNo: '', status: undefined, paymentMethod: undefined, startDate: '', endDate: '', pageNum: 1, pageSize: 10 })
 
@@ -85,6 +90,21 @@ async function loadData() {
 
 function handleSearch() { query.pageNum = 1; loadData() }
 function resetQuery() { Object.assign(query, { orderNo: '', status: undefined, paymentMethod: undefined, startDate: '', endDate: '', pageNum: 1 }); dateRange.value = null; loadData() }
+
+/** 列表页快速整单退货 */
+async function quickReturn(row) {
+  try {
+    await ElMessageBox.confirm(`确定要对销售单 ${row.orderNo} 进行整单退货吗？退货后库存将恢复。`, '退货确认', { type: 'warning' })
+    await processReturn(row.id, { remark: '', items: [] })
+    ElMessage.success('退货处理成功')
+    loadData()
+  } catch (e) { /* handled */ }
+}
+
+/** 列表页快速打印 */
+function quickPrint(row) {
+  router.push('/sales-orders/' + row.id)
+}
 
 onMounted(loadData)
 </script>

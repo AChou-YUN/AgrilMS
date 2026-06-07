@@ -60,6 +60,7 @@
             <el-menu-item index="/reports/purchase">进货报表</el-menu-item>
             <el-menu-item index="/reports/inventory">库存报表</el-menu-item>
             <el-menu-item index="/reports/profit">利润报表</el-menu-item>
+            <el-menu-item index="/reports/customer">客户报表</el-menu-item>
           </el-sub-menu>
         </el-menu>
       </el-scrollbar>

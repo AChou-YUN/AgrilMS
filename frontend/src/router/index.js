@@ -185,6 +185,12 @@ const routes = [
             name: 'ProfitReport',
             component: () => import('@/views/report/ProfitReport.vue'),
             meta: { title: '利润报表' }
+          },
+          {
+            path: 'customer',
+            name: 'CustomerReport',
+            component: () => import('@/views/report/CustomerReport.vue'),
+            meta: { title: '客户报表' }
           }
         ]
       }
