@@ -49,21 +49,21 @@
         <span>利润数据明细</span>
       </div>
       <el-table :data="dataList" v-loading="loading">
-        <el-table-column prop="period" label="时间" min-width="120" />
-        <el-table-column prop="salesAmount" label="销售额" width="120">
+        <el-table-column prop="period" label="时间" min-width="2" />
+        <el-table-column prop="salesAmount" label="销售额" min-width="2" align="right">
           <template #default="{ row }">¥{{ Number(row.salesAmount || 0).toFixed(2) }}</template>
         </el-table-column>
-        <el-table-column prop="purchaseAmount" label="进货成本" width="120">
+        <el-table-column prop="purchaseAmount" label="进货成本" min-width="2" align="right">
           <template #default="{ row }">¥{{ Number(row.purchaseAmount || 0).toFixed(2) }}</template>
         </el-table-column>
-        <el-table-column label="毛利润" width="120">
+        <el-table-column label="毛利润" min-width="2" align="right">
           <template #default="{ row }">
             <span :class="(row.salesAmount - row.purchaseAmount) >= 0 ? 'text-success' : 'text-danger'">
               ¥{{ Number((row.salesAmount || 0) - (row.purchaseAmount || 0)).toFixed(2) }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column label="利润率" width="100">
+        <el-table-column label="利润率" min-width="1" align="center">
           <template #default="{ row }">
             {{ row.salesAmount > 0 ? (((row.salesAmount - row.purchaseAmount) / row.salesAmount) * 100).toFixed(1) : '0.0' }}%
           </template>

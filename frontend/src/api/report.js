@@ -29,13 +29,6 @@ export function getProfitReport(params) {
 }
 
 /**
- * 客户报表
- */
-export function getCustomerReport(params) {
-  return request.get('/reports/customer', { params })
-}
-
-/**
  * 销售概况（今日/本月/本年汇总）
  */
 export function getSalesSummary() {

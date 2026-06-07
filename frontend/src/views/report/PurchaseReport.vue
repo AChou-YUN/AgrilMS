@@ -31,9 +31,9 @@
         <span>进货数据明细</span>
       </div>
       <el-table :data="dataList" v-loading="loading">
-        <el-table-column prop="date" label="时间" min-width="120" />
-        <el-table-column prop="count" label="订单数" width="100" />
-        <el-table-column prop="amount" label="进货额" width="120">
+        <el-table-column prop="date" label="时间" min-width="1" />
+        <el-table-column prop="count" label="订单数" min-width="1" align="center" />
+        <el-table-column prop="amount" label="进货额" min-width="1" align="right">
           <template #default="{ row }">¥{{ Number(row.amount || 0).toFixed(2) }}</template>
         </el-table-column>
       </el-table>

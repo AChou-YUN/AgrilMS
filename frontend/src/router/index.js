@@ -49,18 +49,6 @@ const routes = [
         meta: { title: '农资产品', icon: 'Goods', roles: ['ADMIN', 'DEALER'] }
       },
       {
-        path: 'products/add',
-        name: 'ProductAdd',
-        component: () => import('@/views/product/ProductForm.vue'),
-        meta: { title: '新增产品', hidden: true, roles: ['ADMIN', 'DEALER'] }
-      },
-      {
-        path: 'products/edit/:id',
-        name: 'ProductEdit',
-        component: () => import('@/views/product/ProductForm.vue'),
-        meta: { title: '编辑产品', hidden: true, roles: ['ADMIN', 'DEALER'] }
-      },
-      {
         path: 'categories',
         name: 'CategoryList',
         component: () => import('@/views/product/CategoryList.vue'),
@@ -185,12 +173,6 @@ const routes = [
             name: 'ProfitReport',
             component: () => import('@/views/report/ProfitReport.vue'),
             meta: { title: '利润报表' }
-          },
-          {
-            path: 'customer',
-            name: 'CustomerReport',
-            component: () => import('@/views/report/CustomerReport.vue'),
-            meta: { title: '客户报表' }
           }
         ]
       }
